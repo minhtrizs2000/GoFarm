@@ -1,0 +1,33 @@
+{
+  "name": "root",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"gulp serve\" \"cd theme && theme watch -a --allow-live\"",
+    "build": "gulp build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^6.5.1",
+    "esbuild": "^0.12.29",
+    "gulp": "^4.0.2"
+  },
+  "dependencies": {
+    "@shopify/theme-images": "^4.0.2",
+    "@shopify/theme-sections": "^4.0.2",
+    "@turf/turf": "^6.5.0",
+    "easytimer.js": "^4.5.1",
+    "gsap": "^3.9.1",
+    "intersection-observer": "^0.12.0",
+    "lazysizes": "^5.3.0-beta1",
+    "localforage": "^1.10.0",
+    "mapbox-gl": "^2.6.1",
+    "nouislider": "^15.5.0",
+    "photoswipe": "^4.1.3",
+    "tiny-slider": "^2.9.4",
+    "zenscroll": "^4.0.2"
+  }
+}

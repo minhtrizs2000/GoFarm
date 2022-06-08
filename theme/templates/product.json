@@ -1,0 +1,96 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "thumbnail_position": "left"
+      }
+    },
+    "product-frequently": {
+      "type": "dynamic-section-product-frequently",
+      "settings": {
+        "title": "Frequently bought together"
+      }
+    },
+    "1654671545e9bcb8bc": {
+      "type": "featured-products",
+      "settings": {
+        "collection": "all_product"
+      }
+    },
+    "1654503001ab23c353": {
+      "type": "details",
+      "settings": {
+        "heading": "Details",
+        "heading_color": "#191919",
+        "heading_fontsize": 35,
+        "main_color": "#000000",
+        "main_fontsize": 18,
+        "sub_color": "#4d4d4d",
+        "sub_fontsize": 15
+      }
+    },
+    "16545728975b98f1fb": {
+      "type": "icon-text-content",
+      "blocks": {
+        "b47655df-34c4-4361-a1f0-3c0179d94100": {
+          "type": "icon_text",
+          "settings": {
+            "icon": "shopify:\/\/shop_images\/image_2022-06-01_110837947.png",
+            "icon_content": "Free delivery for all orders"
+          }
+        },
+        "348d65c5-1d1b-401c-be6c-27fa2f74b451": {
+          "type": "icon_text",
+          "settings": {
+            "icon": "shopify:\/\/shop_images\/image_2022-06-01_110905205.png",
+            "icon_content": "Only fresh foods"
+          }
+        }
+      },
+      "block_order": [
+        "b47655df-34c4-4361-a1f0-3c0179d94100",
+        "348d65c5-1d1b-401c-be6c-27fa2f74b451"
+      ],
+      "settings": {
+        "icon_content_color": "#4d4d4d",
+        "icon_content_fontsize": 15,
+        "icon_width": 25
+      }
+    },
+    "1654505242b1c4d278": {
+      "type": "separate_line",
+      "settings": {}
+    },
+    "info": {
+      "type": "info",
+      "settings": {
+        "heading": "Info",
+        "heading_color": "#191919",
+        "heading_fontsize": 35,
+        "content_fontsize": 14
+      }
+    },
+    "16546580174267971c": {
+      "type": "separate_line",
+      "settings": {}
+    },
+    "165459465474f81b14": {
+      "type": "oftenbought",
+      "settings": {
+        "title": "Often bought with"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product-frequently",
+    "1654671545e9bcb8bc",
+    "1654503001ab23c353",
+    "16545728975b98f1fb",
+    "1654505242b1c4d278",
+    "info",
+    "16546580174267971c",
+    "165459465474f81b14"
+  ]
+}

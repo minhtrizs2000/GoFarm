@@ -1,0 +1,105 @@
+
+{{ 'details.css' | asset_url | stylesheet_tag }}
+
+<style>
+    .details__heading {
+        font-size: {{section.settings.heading_fontsize}}px;
+        color: {{section.settings.heading_color}};
+    }
+    .details_main{
+        font-size: {{section.settings.main_fontsize}}px !important;
+        color: {{section.settings.main_color}} !important;
+    }
+    .details_sub {
+        font-size: {{section.settings.sub_fontsize}}px !important;
+        color: {{section.settings.sub_color}} !important;
+    }
+</style>
+
+{%- style -%}
+
+{%- endstyle -%}
+
+{% assign descriptions = product.description | newline_to_br %}
+<div class="details">
+    {%- if section.settings.heading != blank -%}
+        <h1 class="details__heading">{{section.settings.heading}}</h1>
+    {%- endif -%}
+    {% for desc in descriptions %}
+        {%- if desc == 'info' -%}  
+            {% break %}
+        {%- endif -%}
+        {%- if desc != blank -%}  
+            <p>{{ desc }}</p>
+        {%- endif -%}
+    {% endfor %}
+</div>
+
+{% schema %}
+{
+    "name": "Details",
+    "class": "section",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "default": "Default heading for section details",
+            "label": "Heading"
+        },
+        {
+            "type":"color",
+            "id": "heading_color",
+            "label": "Heading Color",
+            "default": "#191919"
+        },
+        {
+          "type": "range",
+          "id": "heading_fontsize",
+          "min": 30,
+          "max": 50,
+          "step": 5,
+          "default": 35,
+          "unit": "px",
+          "label": "Heading fontsize"
+        },
+        {
+            "type":"color",
+            "id": "main_color",
+            "label": "Main Color",
+            "default": "#191919"
+        },
+        {
+          "type": "range",
+          "id": "main_fontsize",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "default": 18,
+          "unit": "px",
+          "label": "Main fontsize"
+        },
+        {
+            "type":"color",
+            "id": "sub_color",
+            "label": "Sub Color",
+            "default": "#191919"
+        },
+        {
+          "type": "range",
+          "id": "sub_fontsize",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "default": 15,
+          "unit": "px",
+          "label": "Sub fontsize"
+        }
+    ],
+  "presets": [
+    {
+      "name": "Details"
+    }
+  ]
+}
+{% endschema %}

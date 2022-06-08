@@ -1,0 +1,211 @@
+<link rel="stylesheet" href="{{ 'product-frequently.css' | asset_url }}">
+<script src="{{ 'product-frequently.js' | asset_url }}" defer="defer"></script>
+
+{% liquid 
+    assign bundle_item_1 = product.metafields.my_fields.bundle_item_1.value
+    assign bundle_item_2 = product.metafields.my_fields.bundle_item_2.value
+    assign bundle_item_3 = product.metafields.my_fields.bundle_item_3.value
+%}
+
+<div class="section-container section-padding bundle_relative" data-section-type="product-frequently" data-section-id="{{section.id}}">
+    <div class="title-wrapper">
+        {%- if section.settings.title != blank -%}
+          <h0 class="title">{{ section.settings.title | escape }}</h0>
+        {%- endif -%}
+    </div>
+    <div class="product-frequently-wrapper">
+        <div class="product-frequently__list">
+            {% if bundle_item_1 != blank %}
+                <div class="product-frequently__item">
+                    <div class="product-frequently__image">
+                        {{ bundle_item_1.image | image_url: width: 190, height: 190 | image_tag }}
+                        <div class="product-frequently__icon">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_1201_4916)">
+                                <path d="M10.5 11.1565H4.71275C4.50606 11.1565 4.30603 11.0833 4.14811 10.95C3.9902 10.8166 3.88459 10.6316 3.85 10.4279L2.31175 1.3862C2.27704 1.18253 2.17138 0.997711 2.01347 0.864469C1.85557 0.731227 1.65561 0.658159 1.449 0.658203H0.875" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9.40625 12.4688C9.36299 12.4688 9.32069 12.4816 9.28472 12.5056C9.24875 12.5297 9.22071 12.5638 9.20415 12.6038C9.18759 12.6438 9.18326 12.6877 9.1917 12.7302C9.20014 12.7726 9.22098 12.8116 9.25157 12.8422C9.28216 12.8728 9.32114 12.8936 9.36357 12.902C9.40601 12.9105 9.44999 12.9062 9.48996 12.8896C9.52993 12.873 9.5641 12.845 9.58813 12.809C9.61217 12.7731 9.625 12.7308 9.625 12.6875C9.625 12.6295 9.60195 12.5738 9.56093 12.5328C9.51991 12.4918 9.46427 12.4688 9.40625 12.4688Z" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M5.03125 12.4688C4.98799 12.4688 4.94569 12.4816 4.90972 12.5056C4.87375 12.5297 4.84571 12.5638 4.82915 12.6038C4.81259 12.6438 4.80826 12.6877 4.8167 12.7302C4.82514 12.7726 4.84598 12.8116 4.87657 12.8422C4.90716 12.8728 4.94614 12.8936 4.98857 12.902C5.03101 12.9105 5.07499 12.9062 5.11496 12.8896C5.15493 12.873 5.1891 12.845 5.21313 12.809C5.23717 12.7731 5.25 12.7308 5.25 12.6875C5.25 12.6295 5.22695 12.5738 5.18593 12.5328C5.14491 12.4918 5.08927 12.4688 5.03125 12.4688" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3.52717 8.53163H10.5686C10.9588 8.53159 11.3378 8.40113 11.6454 8.161C11.9529 7.92087 12.1714 7.58484 12.2661 7.2063L13.1119 3.82296C13.1281 3.75844 13.1293 3.69109 13.1155 3.62602C13.1017 3.56096 13.0732 3.4999 13.0323 3.44748C12.9913 3.39507 12.939 3.35267 12.8792 3.32353C12.8194 3.29439 12.7538 3.27926 12.6873 3.2793H2.63409" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_1201_4916">
+                                <rect width="14" height="14" fill="white" transform="matrix(-1 0 0 1 14 0)"/>
+                                </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="product-frequently__text">
+                        <div class="product-frequently__name">{{ bundle_item_1.product.title }}</div>
+                        <div class="product-frequently__size">{{ bundle_item_1.title }}</div>
+                        <div class="product-frequently__price">
+                            <span class="price-current">{{ bundle_item_1.price | money }}</span>
+                            <span class="price-old">{{ bundle_item_1.compare_at_price | money }}</span>
+                        </div>
+                    </div>
+                </div>
+            
+            {% endif %}
+            
+            {% if bundle_item_2 != blank %}
+                <div class="product-frequently__item">
+                    <div class="product-frequently__image">
+                        {{ bundle_item_2.image | image_url: width: 190, height: 190 | image_tag }}
+                        <div class="product-frequently__icon">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_1201_4916)">
+                                <path d="M10.5 11.1565H4.71275C4.50606 11.1565 4.30603 11.0833 4.14811 10.95C3.9902 10.8166 3.88459 10.6316 3.85 10.4279L2.31175 1.3862C2.27704 1.18253 2.17138 0.997711 2.01347 0.864469C1.85557 0.731227 1.65561 0.658159 1.449 0.658203H0.875" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9.40625 12.4688C9.36299 12.4688 9.32069 12.4816 9.28472 12.5056C9.24875 12.5297 9.22071 12.5638 9.20415 12.6038C9.18759 12.6438 9.18326 12.6877 9.1917 12.7302C9.20014 12.7726 9.22098 12.8116 9.25157 12.8422C9.28216 12.8728 9.32114 12.8936 9.36357 12.902C9.40601 12.9105 9.44999 12.9062 9.48996 12.8896C9.52993 12.873 9.5641 12.845 9.58813 12.809C9.61217 12.7731 9.625 12.7308 9.625 12.6875C9.625 12.6295 9.60195 12.5738 9.56093 12.5328C9.51991 12.4918 9.46427 12.4688 9.40625 12.4688Z" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M5.03125 12.4688C4.98799 12.4688 4.94569 12.4816 4.90972 12.5056C4.87375 12.5297 4.84571 12.5638 4.82915 12.6038C4.81259 12.6438 4.80826 12.6877 4.8167 12.7302C4.82514 12.7726 4.84598 12.8116 4.87657 12.8422C4.90716 12.8728 4.94614 12.8936 4.98857 12.902C5.03101 12.9105 5.07499 12.9062 5.11496 12.8896C5.15493 12.873 5.1891 12.845 5.21313 12.809C5.23717 12.7731 5.25 12.7308 5.25 12.6875C5.25 12.6295 5.22695 12.5738 5.18593 12.5328C5.14491 12.4918 5.08927 12.4688 5.03125 12.4688" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3.52717 8.53163H10.5686C10.9588 8.53159 11.3378 8.40113 11.6454 8.161C11.9529 7.92087 12.1714 7.58484 12.2661 7.2063L13.1119 3.82296C13.1281 3.75844 13.1293 3.69109 13.1155 3.62602C13.1017 3.56096 13.0732 3.4999 13.0323 3.44748C12.9913 3.39507 12.939 3.35267 12.8792 3.32353C12.8194 3.29439 12.7538 3.27926 12.6873 3.2793H2.63409" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_1201_4916">
+                                <rect width="14" height="14" fill="white" transform="matrix(-1 0 0 1 14 0)"/>
+                                </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="product-frequently__text">
+                        <div class="product-frequently__name">{{ bundle_item_2.product.title }}</div>
+                        <div class="product-frequently__size">{{ bundle_item_2.title }}</div>
+                        <div class="product-frequently__price">
+                            <span class="price-current">{{ bundle_item_2.price | money }}</span>
+                            <span class="price-old">{{ bundle_item_2.compare_at_price | money }}</span>
+                        </div>
+                    </div>
+                </div>
+            
+            {% endif %}
+
+            {% if bundle_item_3 != blank %}
+                <div class="product-frequently__item">
+                    <div class="product-frequently__image">
+                        {{ bundle_item_3.image | image_url: width: 190, height: 190 | image_tag }}
+                        <div class="product-frequently__icon">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_1201_4916)">
+                                <path d="M10.5 11.1565H4.71275C4.50606 11.1565 4.30603 11.0833 4.14811 10.95C3.9902 10.8166 3.88459 10.6316 3.85 10.4279L2.31175 1.3862C2.27704 1.18253 2.17138 0.997711 2.01347 0.864469C1.85557 0.731227 1.65561 0.658159 1.449 0.658203H0.875" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9.40625 12.4688C9.36299 12.4688 9.32069 12.4816 9.28472 12.5056C9.24875 12.5297 9.22071 12.5638 9.20415 12.6038C9.18759 12.6438 9.18326 12.6877 9.1917 12.7302C9.20014 12.7726 9.22098 12.8116 9.25157 12.8422C9.28216 12.8728 9.32114 12.8936 9.36357 12.902C9.40601 12.9105 9.44999 12.9062 9.48996 12.8896C9.52993 12.873 9.5641 12.845 9.58813 12.809C9.61217 12.7731 9.625 12.7308 9.625 12.6875C9.625 12.6295 9.60195 12.5738 9.56093 12.5328C9.51991 12.4918 9.46427 12.4688 9.40625 12.4688Z" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M5.03125 12.4688C4.98799 12.4688 4.94569 12.4816 4.90972 12.5056C4.87375 12.5297 4.84571 12.5638 4.82915 12.6038C4.81259 12.6438 4.80826 12.6877 4.8167 12.7302C4.82514 12.7726 4.84598 12.8116 4.87657 12.8422C4.90716 12.8728 4.94614 12.8936 4.98857 12.902C5.03101 12.9105 5.07499 12.9062 5.11496 12.8896C5.15493 12.873 5.1891 12.845 5.21313 12.809C5.23717 12.7731 5.25 12.7308 5.25 12.6875C5.25 12.6295 5.22695 12.5738 5.18593 12.5328C5.14491 12.4918 5.08927 12.4688 5.03125 12.4688" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3.52717 8.53163H10.5686C10.9588 8.53159 11.3378 8.40113 11.6454 8.161C11.9529 7.92087 12.1714 7.58484 12.2661 7.2063L13.1119 3.82296C13.1281 3.75844 13.1293 3.69109 13.1155 3.62602C13.1017 3.56096 13.0732 3.4999 13.0323 3.44748C12.9913 3.39507 12.939 3.35267 12.8792 3.32353C12.8194 3.29439 12.7538 3.27926 12.6873 3.2793H2.63409" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_1201_4916">
+                                <rect width="14" height="14" fill="white" transform="matrix(-1 0 0 1 14 0)"/>
+                                </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="product-frequently__text">
+                        <div class="product-frequently__name">{{ bundle_item_3.product.title }}</div>
+                        <div class="product-frequently__size">{{ bundle_item_3.title }}</div>
+                        <div class="product-frequently__price">
+                            <span class="price-current">{{ bundle_item_3.price | money }}</span>
+                            <span class="price-old">{{ bundle_item_3.compare_at_price | money }}</span>
+                        </div>
+                    </div>
+                </div>
+            
+            {% endif %}
+        </div>
+         
+        <form action="/cart/add" method="post" class="product-frequently__calculator" id="product-frequently-form">
+            <div class="product-frequently__checkbox">
+                {% if bundle_item_1 != blank %}
+                    <div class="custom-checkbox">
+                        <div class="checkbox checkbox--1">
+                            <input type="checkbox" name="option1" id="option1" checked>
+                            <span class="checkmark"></span>
+                        </div>
+                        <label>
+                            <span class="product-frequently__name">{{ bundle_item_1.product.title }}</span>
+                            <span class="product-frequently__size">{{ bundle_item_1.title }}</span>
+                            <span class="price-current checkbox-price-margin">{{ bundle_item_1.price | money }}</span>
+                            <span class="price-old">{{ bundle_item_1.compare_at_price | money }}</span>
+                        </label>
+                    </div>
+                {% endif %}
+                
+                {% if bundle_item_2 != blank %}
+                    <div class="custom-checkbox">
+                        <div class="checkbox checkbox--2">
+                            <input type="checkbox" name="option1" id="option1" checked>
+                            <span class="checkmark"></span>
+                        </div>
+                        <label>
+                            <span class="product-frequently__name">{{ bundle_item_2.product.title }}</span>
+                            <span class="product-frequently__size">{{ bundle_item_2.title }}</span>
+                            <span class="price-current checkbox-price-margin">{{ bundle_item_2.price | money }}</span>
+                            <span class="price-old">{{ bundle_item_2.compare_at_price | money }}</span>
+                        </label>
+                    </div>
+                {% endif %}
+
+                {% if bundle_item_3 != blank %}
+                    <div class="custom-checkbox">
+                        <div class="checkbox checkbox--3">
+                            <input type="checkbox" name="option1" id="option1" checked>
+                            <span class="checkmark"></span>
+                        </div>
+                        <label>
+                            <span class="product-frequently__name">{{ bundle_item_3.product.title }}</span>
+                            <span class="product-frequently__size">{{ bundle_item_3.title }}</span>
+                            <span class="price-current checkbox-price-margin">{{ bundle_item_3.price | money }}</span>
+                            <span class="price-old">{{ bundle_item_3.compare_at_price | money }}</span>
+                        </label>
+                    </div>
+                {% endif %}
+
+            </div>
+            <div class="product-frequently__total">
+                <div class="total-text">Total</div>
+                <div class = "total-price">
+                    <span class="product-frequently__total--current"></span>
+                    <span class="product-frequently__total--old"></span>
+                </div>
+            </div>
+            <div class="product-frequently__button">
+                <button class="product-btn-submit product-frequently__btnSubmit" type="submit">
+                    <span class="icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 15.9379H6.7325C6.43722 15.938 6.15147 15.8335 5.92587 15.6429C5.70028 15.4524 5.54941 15.1882 5.5 14.8971L3.3025 1.98043C3.25291 1.68947 3.10197 1.42544 2.87639 1.2351C2.65081 1.04475 2.36516 0.940367 2.07 0.94043H1.25" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13.4375 17.8125C13.3757 17.8125 13.3153 17.8308 13.2639 17.8652C13.2125 17.8995 13.1724 17.9483 13.1488 18.0054C13.1251 18.0625 13.1189 18.1253 13.131 18.186C13.1431 18.2466 13.1728 18.3023 13.2165 18.346C13.2602 18.3897 13.3159 18.4194 13.3765 18.4315C13.4372 18.4436 13.5 18.4374 13.5571 18.4137C13.6142 18.3901 13.663 18.35 13.6973 18.2986C13.7317 18.2472 13.75 18.1868 13.75 18.125C13.75 18.0421 13.7171 17.9626 13.6585 17.904C13.5999 17.8454 13.5204 17.8125 13.4375 17.8125Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7.1875 17.8125C7.12569 17.8125 7.06527 17.8308 7.01388 17.8652C6.96249 17.8995 6.92244 17.9483 6.89879 18.0054C6.87514 18.0625 6.86895 18.1253 6.881 18.186C6.89306 18.2466 6.92282 18.3023 6.96653 18.346C7.01023 18.3897 7.06591 18.4194 7.12653 18.4315C7.18715 18.4436 7.24999 18.4374 7.30709 18.4137C7.36419 18.3901 7.413 18.35 7.44733 18.2986C7.48167 18.2472 7.5 18.1868 7.5 18.125C7.5 18.0421 7.46708 17.9626 7.40847 17.904C7.34987 17.8454 7.27038 17.8125 7.1875 17.8125" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M5.03931 12.1879H15.0985C15.6559 12.1878 16.1973 12.0015 16.6367 11.6584C17.0761 11.3154 17.3882 10.8353 17.5235 10.2946L18.7318 5.46124C18.7549 5.36906 18.7566 5.27284 18.7369 5.17989C18.7172 5.08694 18.6765 4.99971 18.618 4.92483C18.5595 4.84995 18.4848 4.7894 18.3993 4.74776C18.3139 4.70613 18.2202 4.68452 18.1251 4.68457H3.76347" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>           
+                    </span>
+                    <span class="text">Add all to cart</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script id="data-bundle" type="application/ld+json">
+        {
+          "data" : [{{ bundle_item_1 | json }}, {{ bundle_item_2 | json }}, {{ bundle_item_3 | json }}]
+        }
+    </script>
+</div>
+
+{% schema %}
+    {
+    "name": "Frequently bought",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "default": "Frequently bought together",
+            "label": "Title"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Frequently bought together"
+        }
+    ]
+}
+{% endschema %}

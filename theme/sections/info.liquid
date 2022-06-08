@@ -1,0 +1,83 @@
+<style>
+    .info{
+        max-width: 1240px;
+        margin: 0 auto;
+        font-size: {{section.settings.content_fontsize}}px;
+    }
+    .info__heading {
+        font-size: {{section.settings.heading_fontsize}}px;
+        color: {{section.settings.heading_color}};
+        margin: 0;
+        padding-bottom: 30px;
+    }
+</style>
+
+{%- style -%}
+
+{%- endstyle -%}
+
+{% assign info = product.metafields.my_fields.info | newline_to_br | split: '<br />' %}
+
+<div class="info">
+    {%- if section.settings.heading != blank -%}
+        <h1 class="info__heading">{{section.settings.heading}}</h1>
+    {%- endif -%}
+    <div class="row" style="width: 1240px; margin: 0 auto;">
+        {%- for inf in info -%}
+            {% assign tempt = inf | split: ':' %}
+            <div class="col-3" style="background-color: #F2F2F2; border: 1px solid #F0F0F0; padding: 10px 20px;">
+                <span>{{tempt[0]}}</span>
+            </div>
+            <div class="col-9"  style="background-color: #FFFFFF; border: 1px solid #F0F0F0; border-left: none; font-weight: 600; padding: 10px 20px;">
+                <span>{{tempt[1]}}</span>
+            </div>
+        {%- endfor -%}
+    </div>  
+</div>
+
+{% schema %}
+{
+    "name": "Info",
+    "class": "section",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "default": "Default heading for section info",
+            "label": "Heading"
+        },
+        {
+            "type":"color",
+            "id": "heading_color",
+            "label": "Heading Color",
+            "default": "#191919"
+        },
+        {
+          "type": "range",
+          "id": "heading_fontsize",
+          "min": 30,
+          "max": 50,
+          "step": 5,
+          "default": 35,
+          "unit": "px",
+          "label": "Heading fontsize"
+        },
+        {
+          "type": "range",
+          "id": "content_fontsize",
+          "min": 10,
+          "max": 30,
+          "step": 2,
+          "default": 14,
+          "unit": "px",
+          "label": "Content fontsize"
+        }
+    ],
+  "presets": [
+    {
+      "name": "Info"
+    }
+  ]
+}
+{% endschema %}

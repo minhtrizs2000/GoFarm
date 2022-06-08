@@ -1,0 +1,53 @@
+<!-- <link rel="stylesheet" href="{{ 'featured-collection.css' | asset_url }}"> -->
+<script src="{{ 'featured-products.js' | asset_url }}" defer="defer"></script>
+<link rel="stylesheet" href="{{ 'tiny-slider.css' | asset_url }}">
+
+<style>
+    .featured__container{
+        max-width: 1240px;
+        margin: 0 auto;
+    }
+
+    .featured__card{
+        width: 190px;
+        height: 276px;
+    }
+</style>
+
+{% assign my_products = section.settings.collection.products %}
+
+<div class="featured__container">
+    <div class="featured__slider">
+        {% for p in my_products %}
+            <div class="featured__card">
+                <a href="{{ p.url }}" class="featured-product"> 
+                    <span>
+                        {{ p.title }}
+                    </span>
+                    <div class="product-img">
+                       <img src=" {{ p | image_url: width: 300 }}" alt="">
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "Featured Products",
+        "tag": "section",
+        "settings": [
+            {
+                "type": "collection",
+                "id": "collection",
+                "label": "Collection"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Featured Products"
+            }
+        ]
+    }
+{% endschema %}

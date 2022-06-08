@@ -1,0 +1,40 @@
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    margin: 0;
+
+    letter-spacing: 0.06rem;
+    
+    font-family: 'Jost', sans-serif !important;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+
+    overflow-x: hidden;
+}
+
+.section-container {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+:root {
+    --text-color: #1A1A1A;
+    --text-color-2: #191919;
+    --text-color-3: #4D4D4D;
+    --text-color-4: #999999;
+    --white-color: #FFFFFF;
+    --green-color: #05A845;
+    --orange-color: #FE8F17;
+}

@@ -1,0 +1,66 @@
+.often__container{
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.often__title {
+    font-size: 35px;
+    font-weight: 500;
+    color: var(--text-color-2);
+}
+
+.product-often__list {
+    display: flex;
+}
+
+.product-often__item {
+    padding: 30px;
+    border-right: 1px solid #EDEDED;
+}
+
+.product__often__img {
+    width: 190px;
+    height: 190px;
+    position: relative;
+}
+
+.product__often__img img {
+    width: 100%;
+    height: auto;
+}
+
+.product__often__icon {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #E6E6E6;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 32px;
+    cursor: pointer;
+}
+
+.product__often__text {
+    margin-top: 15px;
+}
+
+.product__often__name,
+.product__often__size {
+    font-size: 15px;
+    color: var(--text-color-2);
+}
+
+.price__current {
+    font-size: 16px;
+    color: var(--green-color);
+    font-weight: 500;
+}
+
+.price__old {
+    font-size: 16px;
+    color: var(--text-color-4);
+    text-decoration: line-through;
+    margin-left: 10px;
+}

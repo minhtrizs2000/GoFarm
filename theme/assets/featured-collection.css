@@ -1,0 +1,15 @@
+.collection-wrapper {
+    display: flex;
+    padding: 30px 0;
+}
+
+.product-wrapper {
+    flex: 1;
+}
+
+.featured-product {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--green-color);
+    text-decoration: underline;
+}

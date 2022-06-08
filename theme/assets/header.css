@@ -1,0 +1,175 @@
+:root {
+    --search-width: 515px;
+}
+
+header {
+    padding-top: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.header-top {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.header-top__products {
+    margin-left: 72px;
+    padding: 8px 25px;
+    border: 1px solid #E3E3E3;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.header-top__hambergur i {
+    color: var(--text-color);
+    font-size: 20px;
+}
+
+.header-top__title {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 22px;
+    color: var(--text-color);
+    margin-left: 13px;
+}
+
+.header-top__search {
+    margin-left: 18px;
+    background-color: #F0F0F0;
+    border-radius: 5px;
+    width: var(--search-width);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+.header-top__search input[type=search] {
+    border: none;
+    outline: none;
+    background-color: #F0F0F0;
+    height: 100%;
+    padding: 0 25px;
+    width: 460px;
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.header-top__btnSearch {
+    display: flex;
+    width: calc( var(--search-width) - 460px);
+    height: 100%;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-top__btnSearch i {
+    font-size: 16px;
+    color: var(--green-color);
+}
+
+.header-top__language {
+    margin-left: 55px;
+    font-size: 12px;
+}
+
+.header-top__language .select2-container--default .select2-selection--single {
+    border: none;
+    outline: none;
+}
+
+.header-top__language .select2-container .select2-selection--single .select2-selection__rendered {
+    padding-right: 24px;
+}
+
+.header-top__currency {
+    margin-left: 12px;
+    font-size: 12px;
+}
+
+.select2-results__option {
+    font-size: 12px;
+}
+
+
+.header-top__currency .select2-container--default .select2-selection--single {
+    border: none;
+    outline: none;
+}
+
+.header-top__currency .select2-container .select2-selection--single .select2-selection__rendered {
+    padding-right: 24px;
+}
+
+.header-top__icon {
+    display: flex;
+    gap: 30px;
+}
+
+.header-top__icon i {
+    font-size: 20px;
+}
+
+.header-top__userAction {
+    margin-left: 40px;
+}
+
+.header-top__love,
+.header-top__cart  {
+    position: relative;
+}
+
+.header-top__love .love-number,
+.header-top__cart .cart-number {
+    position: absolute;
+    left: 11px;
+    bottom: 13px;
+    border: none;
+    border-radius: 50%;
+    outline:none;
+    background-color: var(--green-color);
+    color: var(--white-color);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.header-menu {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-menu__list {
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.header-menu__item {
+    list-style: none;
+}
+
+.header-menu__item a {
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.header-menu__info p{
+    margin: 0;
+    font-size: 15px;
+}
+
+.header-menu__info a{
+    color: var(--green-color);
+    text-decoration: underline;
+}

@@ -1,0 +1,55 @@
+{
+  "plugin": [
+  ],
+  "theme": [
+    "global",
+    "quantity",
+    "events",
+    "popup",
+    "cart",
+    "cart-recommendation",
+    "product-cart",
+    "fly-to-cart",
+    "sticky",
+    "money",
+    "scroll",
+    "money-format",
+    "slider",
+    "mobile-menu",
+    "multi-shop-switcher",
+    "theme-section",
+    "mega-menu",
+    "slideshow",
+    "slider",
+    "recently-view",
+    "newsletter",
+    "countdown"
+  ],
+  "collection-page": [
+    "collection-filter",
+    "collection-view",
+    "collection-paginate",
+    "infinite-loading",
+    "price-range"
+  ],
+  "product-page": [
+    "product",
+    "product-form",
+    "product-slider",
+    "product-recommendations",
+    "product-bundle",
+    "store-availability"
+  ],
+  "page": [
+    "map"
+  ],
+  "address-page": [
+    "shopify-common"
+  ],
+  "multi-currencies": [
+    "currencies"
+  ],
+  "fomo-section": [
+    "fomo-notify"
+  ]
+}

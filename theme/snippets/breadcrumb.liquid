@@ -1,0 +1,12 @@
+{{ 'breadcrumb.css' | asset_url | stylesheet_tag }}
+
+<ul class="breadcrumb breadcrumb-wrapper">
+    {%- case request.page_type -%}
+        {%- when 'product' -%}
+            <li><a href="{{ shop.url }}">Home</a></li>
+            <li><a href="{{ product.url }}">{{- product.title -}}</a></li>
+        {%- when 'cart' -%}
+            <li><a href="{{ shop.url }}">Home</a></li>
+            <li><a href="#"> Cart</a></li>
+    {% endcase %}
+</ul>

@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="{{ 'announcement-bar.css' | asset_url }}">
+<script src="{{ 'announcement-bar.js' | asset_url }}" defer="defer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+{%- style -%}
+  .bgColor {
+    background-color: {{ section.settings.background_color }};
+  }
+  .text-align {
+    text-align: center;
+  }
+{%- endstyle -%}
+
+
+<div data-section-type="announcement" data-section-id="{{section.id}}">
+  <div class="bgColor">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'announcement' -%}
+          <div id="announcement-bar-{{block.id}}" class="announcement-bar" {{ block.shopify_attributes }}>
+            {%- if block.settings.richtext != blank -%}
+              <div class="announcement-bar__message text-align"> {{ block.settings.richtext }} </div>
+            {%- endif -%}
+            <div class="announcement-bar__close">
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "max_blocks": 10,
+  "tag": "section",
+  "settings": [
+    {
+      "type":"color",
+      "id":"background_color",
+      "label":"Background color",
+      "default": "#FE8F17"
+    },
+    {
+       "type":"header",
+       "content":"Section styles"
+    },
+    {
+      "type":"text",
+      "id":"padding",
+      "label":"Padding"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type":"richtext",
+          "id":"richtext",
+          "label":"Rich text content"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "announcement"
+      }
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="{{ 'footer.css' | asset_url }}">
+
+<div class="section-container">
+   <div class="footer-info">
+        <div class="footer-info__contact">
+            <h6>Your store</h6>
+            <div class="footer-contact__address">
+                <div class="footer-contact__icon">
+                    <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_1301_52)">
+                        <path d="M9.5 11.7812C11.4675 11.7812 13.0625 10.1863 13.0625 8.21875C13.0625 6.25124 11.4675 4.65625 9.5 4.65625C7.53249 4.65625 5.9375 6.25124 5.9375 8.21875C5.9375 10.1863 7.53249 11.7812 9.5 11.7812Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16.625 8.21828C16.6247 6.87018 16.242 5.54983 15.5213 4.41057C14.8006 3.2713 13.7714 2.35988 12.5534 1.78216C11.3354 1.20444 9.97845 0.98412 8.6402 1.1468C7.30196 1.30948 6.03733 1.84847 4.99319 2.70119C3.94905 3.5539 3.16825 4.68534 2.74147 5.9641C2.31469 7.24285 2.25945 8.61645 2.58216 9.92534C2.90487 11.2342 3.5923 12.4247 4.56459 13.3585C5.53688 14.2923 6.75414 14.9312 8.075 15.2008L9.5 18.9058L10.925 15.2008C12.5343 14.8723 13.9808 13.9978 15.0195 12.7254C16.0582 11.453 16.6253 9.86081 16.625 8.21828V8.21828Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_1301_52">
+                        <rect width="19" height="19" fill="white" transform="translate(0 0.5)"/>
+                        </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="footer-contact__text">
+                    1487 Rocky Horse Carrefour Arlington, TX 16819
+                </div>
+            </div>
+            <div class="footer-info__time">
+                <p>Monday - Friday: 9:00 - 20:00</p>
+                <p>Saturday: 11:00 - 15:00</p>
+            </div>
+            <div class="footer-contact__map">
+                <a href="#">Show on map</a>
+            </div>
+        </div>
+        <div class="footer-info__help">
+            <h6>Need help</h6>
+            <div class="footer-help__phone">
+                +48 500-130-0001
+            </div>
+            <div class="footer-info__time">
+                <p>Monday - Friday: 9:00 - 20:00</p>
+                <p>Saturday: 11:00 - 15:00</p>
+            </div>
+            <div class="footer-help__mail">
+                <a href="mailto: someone@example.com">contact@example.com</a>
+            </div>
+            <div class="footer-help__social">
+                <i class="fa-brands fa-facebook-f"></i>
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-youtube"></i>
+                <i class="fa-brands fa-pinterest-p"></i>
+                <i class="fa-brands fa-linkedin-in"></i>
+            </div>
+        </div>
+        <div class="footer-info__account">
+            <h6>Account</h6>
+            <ul>
+                <li>My account</li>
+                <li>My order</li>
+                <li>Return</li>
+                <li>Shipping</li>
+                <li>Wishlist</li>
+            </ul>
+        </div>
+        <div class="footer-info__store">
+            <h6>Store</h6>
+            <ul>
+                <li>Affiliate</li>
+                <li>Bestsellers</li>
+                <li>Discount</li>
+                <li>Latest products</li>
+                <li>Sale</li>
+            </ul>
+        </div>
+   </div>
+   <div class="footer-service">
+        <ul class="product-service">
+            <li>
+                <img src="{{ 'image_2022-06-01_110837947.png' | file_url }}" />
+                <span>Free delivery for all orders</span>
+            </li>
+            <li>
+                <img src="{{ 'image_2022-06-01_110905205.png' | file_url }}" />
+                <span>Only fresh foods</span>
+            </li>
+            <li>
+                <img src="{{ 'clock_1.png' | file_url }}" />
+                <span>25/7 delivery service</span>
+            </li>
+        </ul>
+   </div>
+   <div class="footer-copyright">
+    <div class="footer-copyright__left">
+        <ul>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Delivery information</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Sales</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+        <p>Copyright © 2020 Grocer. All Rights Reserved</p>
+    </div>
+    <div class="footer-copyright__right">
+        <img src="{{ 'Frame_16.png' | file_url }}" alt="">
+    </div>
+   </div>
+</div>
+
+{% schema %}
+    {
+    "name": "Footer",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "default": "Frequently bought together",
+            "label": "Title"
+        }
+    ]
+}
+{% endschema %}

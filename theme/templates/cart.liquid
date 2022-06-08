@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="{{ 'cart.css' | asset_url }}">
+<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+
+<div class="cart-wrapper section-container">
+  {% if cart.item_count > 0 %}
+    <div class="cart-heading">
+      <h2> Shoping Cart </h2>
+      <div class="cart-heading__counter"> ({{ cart.item_count }}) </div>
+    </div>
+    <div class="cart-content">
+      <form action="/cart" method="post" novalidate>
+        <table>
+          <thead>
+            <th colspan="2">Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </thead>
+          <tbody>
+            {% for item in cart.items %}
+              <tr>
+                <td colspan="2">
+                  <span class="remove-icon" data-index="{{ forloop.index }}" data-id="{{ item.id }}">
+                    <i class="fa-solid fa-xmark"></i>
+                  </span>
+                  <a href="{{ item.url | within: collections.all }}" class="cart-item__info">
+                    <img src="{{ item | img_url: '90x90' }}" alt="{{ item.title | escape }}">
+                    <span>{{ item.title }}</span>
+                  </a>
+                </td>
+                <td>
+                  <div class="cart-item__price--current cart-item__final-price">{{ item.final_price  | money }} </div>
+                  <div class="cart-item__price--old cart-item__compare-price">{{ item.variant.compare_at_price | money }} </div>
+                </td>
+                <td>
+                  <div class="cart-item__quantity" data-key="{{ item.key }}">
+                    <button type="button" class="button-minus">
+                      <i class="fa-solid fa-minus"></i>
+                    </button>
+                    <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" class="product-qty">
+                    <button type="button" class="button-plus">
+                      <i class="fa-solid fa-plus"></i>
+                    </button>
+                  </div>       
+                </td>
+                <td>
+                  <div class="cart-item__price--current cart-item__subtotal-price">{{ item.final_line_price | money }} </div>
+                  <div class="cart-item__price--old cart-item__subtotal-compare">{{ item.variant.compare_at_price | times: item.quantity | money }} </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </form>
+      <div class="cart-total">
+        <div class="cart-total-wrapper">
+          <div class="cart-total-heading">Cart totals</div>
+          <ul class="cart-total-list">
+            <li>
+              <span class="list__subtotal">Subtotal</span>
+              <span class="list__subtotal-value">{{ cart.items_subtotal_price | money }}</span>
+            </li>
+            <li>
+              <span class="list__shipping">Shipping</span>
+              <span class="list__shipping-value"> Enter your address to view shipping options. </span>
+            </li>
+            <li>
+              <span class="list__total">Total</span>
+              <span class="list__total-value">{{ cart.total_price | money }}</span>
+            </li>
+            <li>
+              <button type="submit" class="cart-btn-submit">
+                Proceed to checkout
+              </button>
+            </li>
+          </ul>
+        </div>
+          
+      </div>
+    </div>
+  {% else %}
+    <p class="cart-empty"> Cart is empty</p> 
+  {% endif %}
+</div>

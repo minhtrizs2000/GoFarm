@@ -1,0 +1,27 @@
+:root {
+    --color-white: #FFFFFF;
+}
+
+.announcement-bar {
+    position: relative;
+}
+
+.announcement-bar__message p {
+    margin: 0;
+    font-size: 15px;
+    padding: 4px 0;
+    line-height: 22px;
+    color: var(--color-white);
+}
+
+.announcement-bar__close {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.announcement-bar__close i {
+    color: var(--color-white);
+}

@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="{{ 'featured-collection.css' | asset_url }}">
+
+{% assign my_collection = section.settings.collection.products %}
+<div class="section-container">
+    <div class="collection-wrapper">
+        {% for product in my_collection limit: 4 %}
+            <div class="product-wrapper">
+                <a href="{{ product.url }}" class="featured-product"> 
+                    <span>
+                        {{ product.title }}
+                    </span>
+                    <div class="product-img">
+                       <img src=" {{ product | image_url: width: 300 }}" alt="">
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>    
+</div>
+
+
+{% schema %}
+    {
+    "name": "Featured Collection",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Featured Collection"
+        }
+    ]
+    }
+{% endschema %}
