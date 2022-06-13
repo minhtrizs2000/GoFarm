@@ -2612,16 +2612,15 @@
 
   // app/scripts/featured-products.js
   var import_tiny_slider = __toModule(require_tiny_slider());
-  register("featured-products", {
+  register("featured__products", {
     onLoad: function() {
       var slider = (0, import_tiny_slider.tns)({
-        container: ".featured__slider",
+        container: "#featured__slider",
         items: 6,
-        slideBy: 1,
+        slideBy: "1",
         autoplay: true,
         controls: false,
         autoplayButtonOutput: false,
-        mouseDrag: true,
         navPosition: "bottom"
       });
     }

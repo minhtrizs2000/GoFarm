@@ -7,31 +7,58 @@
         color: {{section.settings.heading_color}};
     }
     .details_main{
+        padding-bottom: 30px !important;
         font-size: {{section.settings.main_fontsize}}px !important;
         color: {{section.settings.main_color}} !important;
     }
     .details_sub {
+        padding-bottom: 30px !important;
         font-size: {{section.settings.sub_fontsize}}px !important;
         color: {{section.settings.sub_color}} !important;
     }
+    
+    .icon__text__container{
+        width: 1240px;
+        margin: 0 auto;
+    }
+    .icon__text {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding-right: 40px;
+    }
+    .icon__text__content{
+        color: {{section.settings.icon_content_color}};
+        font-size: {{section.settings.icon_content_fontsize}}px;
+    }
 </style>
 
-{%- style -%}
-
-{%- endstyle -%}
-
-{% assign descriptions = product.description | newline_to_br %}
+{% assign descriptions = product.description %}
 <div class="details">
     {%- if section.settings.heading != blank -%}
         <h1 class="details__heading">{{section.settings.heading}}</h1>
     {%- endif -%}
     {% for desc in descriptions %}
-        {%- if desc == 'info' -%}  
-            {% break %}
-        {%- endif -%}
         {%- if desc != blank -%}  
             <p>{{ desc }}</p>
         {%- endif -%}
+    {% endfor %}
+</div>
+<div class="icon__text__container">
+    {% for block in section.blocks %}
+        <div class="icon__text">
+            {% if block.settings.icon != blank %}
+                <img
+                src="{{ block.settings.icon | image_url: width: 84, height: 84 }}"
+                height="{{section.settings.icon_width}}"
+                width="{{section.settings.icon_width}}"
+                loading="lazy"
+                >
+            {% endif %}
+            {% if block.settings.icon_content != blank %}
+                <span class="icon__text__content">{{block.settings.icon_content}}</span>
+            {% endif %}
+        </div>
     {% endfor %}
 </div>
 
@@ -94,8 +121,53 @@
           "default": 15,
           "unit": "px",
           "label": "Sub fontsize"
+        },
+        {
+            "type":"color",
+            "id": "icon_content_color",
+            "label": "Icon content Color",
+            "default": "#4D4D4D"
+        },
+        {
+            "type": "range",
+            "id": "icon_content_fontsize",
+            "min": 10,
+            "max": 20,
+            "step": 1,
+            "default": 15,
+            "unit": "px",
+            "label": "Icon content fontsize"
+        },
+        {
+            "type": "range",
+            "id": "icon_width",
+            "min": 20,
+            "max": 100,
+            "step": 5,
+            "default": 25,
+            "unit": "px",
+            "label": "Icon width"
         }
     ],
+    "blocks": [
+    {
+      "type": "icon_text",
+      "name": "Icon Content",
+      "settings": [
+        {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+        },
+        {
+            "type": "text",
+            "id": "icon_content",
+            "default": "This is a icon content",
+            "label": "Icon content"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
       "name": "Details"
