@@ -2,6 +2,8 @@
 <script src="{{ 'featured-products.js' | asset_url }}" defer="defer"></script>
 <link rel="stylesheet" href="{{ 'tiny-slider.css' | asset_url }}">
 
+{{ 'tiny-slider.css' | asset_url | stylesheet_tag }}
+
 <style>
     .featured__container{
         max-width: 1240px;
@@ -9,15 +11,13 @@
     }
 
     .featured__card{
-        width: 190px;
-        height: 276px;
     }
 </style>
 
 {% assign my_products = section.settings.collection.products %}
 
 <div class="featured__container">
-    <div class="featured__slider">
+    <div class="featured__slider" data-section-type="featured-products" data-section-id="{{section.id}}">
         {% for p in my_products %}
             <div class="featured__card">
                 <a href="{{ p.url }}" class="featured-product"> 
@@ -25,7 +25,7 @@
                         {{ p.title }}
                     </span>
                     <div class="product-img">
-                       <img src=" {{ p | image_url: width: 300 }}" alt="">
+                       <img src=" {{ p | image_url: width: 190, height: 190 }}" alt="">
                     </div>
                 </a>
             </div>

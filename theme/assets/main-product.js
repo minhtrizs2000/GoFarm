@@ -540,12 +540,12 @@
           options.edgePadding = false;
           var animateIn = options.animateIn, animateOut = options.animateOut, animateDelay = options.animateDelay, animateNormal = options.animateNormal;
         }
-        var horizontal = options.axis === "horizontal" ? true : false, outerWrapper = doc.createElement("div"), innerWrapper = doc.createElement("div"), middleWrapper, container2 = options.container, containerParent = container2.parentNode, containerHTML = container2.outerHTML, slideItems = container2.children, slideCount = slideItems.length, breakpointZone, windowWidth = getWindowWidth(), isOn = false;
+        var horizontal = options.axis === "horizontal" ? true : false, outerWrapper = doc.createElement("div"), innerWrapper = doc.createElement("div"), middleWrapper, container = options.container, containerParent = container.parentNode, containerHTML = container.outerHTML, slideItems = container.children, slideCount = slideItems.length, breakpointZone, windowWidth = getWindowWidth(), isOn = false;
         if (responsive) {
           setBreakpointZone();
         }
         if (carousel) {
-          container2.className += " tns-vpfix";
+          container.className += " tns-vpfix";
         }
         var autoWidth = options.autoWidth, fixedWidth = getOption("fixedWidth"), edgePadding = getOption("edgePadding"), gutter = getOption("gutter"), viewport = getViewportWidth(), center = getOption("center"), items = !autoWidth ? Math.floor(getOption("items")) : 1, slideBy = getOption("slideBy"), viewportMax = options.viewportMax || options.fixedWidthViewportWidth, arrowKeys = getOption("arrowKeys"), speed = getOption("speed"), rewind = options.rewind, loop = rewind ? false : options.loop, autoHeight = getOption("autoHeight"), controls = getOption("controls"), controlsText = getOption("controlsText"), nav = getOption("nav"), touch = getOption("touch"), mouseDrag = getOption("mouseDrag"), autoplay = getOption("autoplay"), autoplayTimeout = getOption("autoplayTimeout"), autoplayText = getOption("autoplayText"), autoplayHoverPause = getOption("autoplayHoverPause"), autoplayResetOnVisibility = getOption("autoplayResetOnVisibility"), sheet = createStyleSheet(null, getOption("nonce")), lazyload = options.lazyload, lazyloadSelector = options.lazyloadSelector, slidePositions, slideItemsOut = [], cloneCount = loop ? getCloneCountForLoop() : 0, slideCountNew = !carousel ? slideCount + cloneCount : slideCount + cloneCount * 2, hasRightDeadZone = (fixedWidth || autoWidth) && !loop ? true : false, rightBoundary = fixedWidth ? getRightBoundary() : null, updateIndexBeforeTransform = !carousel || !loop ? true : false, transformAttr = horizontal ? "left" : "top", transformPrefix = "", transformPostfix = "", getIndexMax = function() {
           if (fixedWidth) {
@@ -571,7 +571,7 @@
           }
         }(), index = getStartIndex(getOption("startIndex")), indexCached = index;
         getCurrentSlide();
-        var indexMin = 0, indexMax = !autoWidth ? getIndexMax() : null, preventActionWhenRunning = options.preventActionWhenRunning, swipeAngle = options.swipeAngle, moveDirectionExpected = swipeAngle ? "?" : true, running = false, onInit = options.onInit, events = new Events(), newContainerClasses = " tns-slider tns-" + options.mode, slideId = container2.id || getSlideId(), disable = getOption("disable"), disabled = false, freezable = options.freezable, freeze = freezable && !autoWidth ? getFreeze() : false, frozen = false, controlsEvents = {
+        var indexMin = 0, indexMax = !autoWidth ? getIndexMax() : null, preventActionWhenRunning = options.preventActionWhenRunning, swipeAngle = options.swipeAngle, moveDirectionExpected = swipeAngle ? "?" : true, running = false, onInit = options.onInit, events = new Events(), newContainerClasses = " tns-slider tns-" + options.mode, slideId = container.id || getSlideId(), disable = getOption("disable"), disabled = false, freezable = options.freezable, freeze = freezable && !autoWidth ? getFreeze() : false, frozen = false, controlsEvents = {
           "click": onControlsClick,
           "keydown": onControlsKeydown
         }, navEvents = {
@@ -629,7 +629,7 @@
           }
         }
         if (carousel) {
-          container2.className = container2.className.replace("tns-vpfix", "");
+          container.className = container.className.replace("tns-vpfix", "");
         }
         initStructure();
         initSheet();
@@ -827,8 +827,8 @@
           innerWrapper.className = classInner;
           outerWrapper.id = slideId + "-ow";
           innerWrapper.id = slideId + "-iw";
-          if (container2.id === "") {
-            container2.id = slideId;
+          if (container.id === "") {
+            container.id = slideId;
           }
           newContainerClasses += PERCENTAGELAYOUT || autoWidth ? " tns-subpixel" : " tns-no-subpixel";
           newContainerClasses += CALC ? " tns-calc" : " tns-no-calc";
@@ -836,7 +836,7 @@
             newContainerClasses += " tns-autowidth";
           }
           newContainerClasses += " tns-" + options.axis;
-          container2.className += newContainerClasses;
+          container.className += newContainerClasses;
           if (carousel) {
             middleWrapper = doc.createElement("div");
             middleWrapper.id = slideId + "-mw";
@@ -850,8 +850,8 @@
             var wp = middleWrapper ? middleWrapper : innerWrapper;
             wp.className += " tns-ah";
           }
-          containerParent.insertBefore(outerWrapper, container2);
-          innerWrapper.appendChild(container2);
+          containerParent.insertBefore(outerWrapper, container);
+          innerWrapper.appendChild(container);
           forEach(slideItems, function(item, i) {
             addClass(item, "tns-item");
             if (!item.id) {
@@ -879,14 +879,14 @@
                 fragmentBefore.appendChild(cloneLast);
               }
             }
-            container2.insertBefore(fragmentBefore, container2.firstChild);
-            container2.appendChild(fragmentAfter);
-            slideItems = container2.children;
+            container.insertBefore(fragmentBefore, container.firstChild);
+            container.appendChild(fragmentAfter);
+            slideItems = container.children;
           }
         }
         function initSliderTransform() {
           if (hasOption("autoHeight") || autoWidth || !horizontal) {
-            var imgs = container2.querySelectorAll("img");
+            var imgs = container.querySelectorAll("img");
             forEach(imgs, function(img) {
               var src = img.src;
               if (!lazyload) {
@@ -1005,7 +1005,7 @@
             update_carousel_transition_duration();
             innerWrapper.style.cssText = getInnerWrapperStyles(edgePadding, gutter, fixedWidth, autoHeight);
             if (carousel && horizontal && !autoWidth) {
-              container2.style.width = getContainerWidth(fixedWidth, gutter, items);
+              container.style.width = getContainerWidth(fixedWidth, gutter, items);
             }
             var str = horizontal && !autoWidth ? getSlideWidthStyle(fixedWidth, gutter, items) : "";
             if (gutter) {
@@ -1080,10 +1080,10 @@
             if (autoplay) {
               startAutoplay();
               if (autoplayHoverPause) {
-                addEvents(container2, hoverEvents);
+                addEvents(container, hoverEvents);
               }
               if (autoplayResetOnVisibility) {
-                addEvents(container2, visibilityEvent);
+                addEvents(container, visibilityEvent);
               }
             }
           }
@@ -1171,13 +1171,13 @@
           if (carousel && TRANSITIONEND) {
             var eve = {};
             eve[TRANSITIONEND] = onTransitionEnd;
-            addEvents(container2, eve);
+            addEvents(container, eve);
           }
           if (touch) {
-            addEvents(container2, touchEvents, options.preventScrollOnTouch);
+            addEvents(container, touchEvents, options.preventScrollOnTouch);
           }
           if (mouseDrag) {
-            addEvents(container2, dragEvents);
+            addEvents(container, dragEvents);
           }
           if (arrowKeys) {
             addEvents(doc, docmentKeydownEvent);
@@ -1231,8 +1231,8 @@
           if (navContainer) {
             removeEvents(navContainer, navEvents);
           }
-          removeEvents(container2, hoverEvents);
-          removeEvents(container2, visibilityEvent);
+          removeEvents(container, hoverEvents);
+          removeEvents(container, visibilityEvent);
           if (autoplayButton) {
             removeEvents(autoplayButton, {
               "click": toggleAutoplay
@@ -1244,13 +1244,13 @@
           if (carousel && TRANSITIONEND) {
             var eve = {};
             eve[TRANSITIONEND] = onTransitionEnd;
-            removeEvents(container2, eve);
+            removeEvents(container, eve);
           }
           if (touch) {
-            removeEvents(container2, touchEvents);
+            removeEvents(container, touchEvents);
           }
           if (mouseDrag) {
-            removeEvents(container2, dragEvents);
+            removeEvents(container, dragEvents);
           }
           var htmlList = [containerHTML, controlsContainerHTML, prevButtonHTML, nextButtonHTML, navContainerHTML, autoplayButtonHTML];
           tnsList.forEach(function(item, i) {
@@ -1261,7 +1261,7 @@
               options[item] = prevEl ? prevEl.nextElementSibling : parentEl.firstElementChild;
             }
           });
-          tnsList = animateIn = animateOut = animateDelay = animateNormal = horizontal = outerWrapper = innerWrapper = container2 = containerParent = containerHTML = slideItems = slideCount = breakpointZone = windowWidth = autoWidth = fixedWidth = edgePadding = gutter = viewport = items = slideBy = viewportMax = arrowKeys = speed = rewind = loop = autoHeight = sheet = lazyload = slidePositions = slideItemsOut = cloneCount = slideCountNew = hasRightDeadZone = rightBoundary = updateIndexBeforeTransform = transformAttr = transformPrefix = transformPostfix = getIndexMax = index = indexCached = indexMin = indexMax = swipeAngle = moveDirectionExpected = running = onInit = events = newContainerClasses = slideId = disable = disabled = freezable = freeze = frozen = controlsEvents = navEvents = hoverEvents = visibilityEvent = docmentKeydownEvent = touchEvents = dragEvents = hasControls = hasNav = navAsThumbnails = hasAutoplay = hasTouch = hasMouseDrag = slideActiveClass = imgCompleteClass = imgEvents = imgsComplete = controls = controlsText = controlsContainer = controlsContainerHTML = prevButton = nextButton = prevIsButton = nextIsButton = nav = navContainer = navContainerHTML = navItems = pages = pagesCached = navClicked = navCurrentIndex = navCurrentIndexCached = navActiveClass = navStr = navStrCurrent = autoplay = autoplayTimeout = autoplayDirection = autoplayText = autoplayHoverPause = autoplayButton = autoplayButtonHTML = autoplayResetOnVisibility = autoplayHtmlStrings = autoplayTimer = animating = autoplayHoverPaused = autoplayUserPaused = autoplayVisibilityPaused = initPosition = lastPosition = translateInit = panStart = rafIndex = getDist = touch = mouseDrag = null;
+          tnsList = animateIn = animateOut = animateDelay = animateNormal = horizontal = outerWrapper = innerWrapper = container = containerParent = containerHTML = slideItems = slideCount = breakpointZone = windowWidth = autoWidth = fixedWidth = edgePadding = gutter = viewport = items = slideBy = viewportMax = arrowKeys = speed = rewind = loop = autoHeight = sheet = lazyload = slidePositions = slideItemsOut = cloneCount = slideCountNew = hasRightDeadZone = rightBoundary = updateIndexBeforeTransform = transformAttr = transformPrefix = transformPostfix = getIndexMax = index = indexCached = indexMin = indexMax = swipeAngle = moveDirectionExpected = running = onInit = events = newContainerClasses = slideId = disable = disabled = freezable = freeze = frozen = controlsEvents = navEvents = hoverEvents = visibilityEvent = docmentKeydownEvent = touchEvents = dragEvents = hasControls = hasNav = navAsThumbnails = hasAutoplay = hasTouch = hasMouseDrag = slideActiveClass = imgCompleteClass = imgEvents = imgsComplete = controls = controlsText = controlsContainer = controlsContainerHTML = prevButton = nextButton = prevIsButton = nextIsButton = nav = navContainer = navContainerHTML = navItems = pages = pagesCached = navClicked = navCurrentIndex = navCurrentIndexCached = navActiveClass = navStr = navStrCurrent = autoplay = autoplayTimeout = autoplayDirection = autoplayText = autoplayHoverPause = autoplayButton = autoplayButtonHTML = autoplayResetOnVisibility = autoplayHtmlStrings = autoplayTimer = animating = autoplayHoverPaused = autoplayUserPaused = autoplayVisibilityPaused = initPosition = lastPosition = translateInit = panStart = rafIndex = getDist = touch = mouseDrag = null;
           for (var a in this) {
             if (a !== "rebuild") {
               this[a] = null;
@@ -1405,10 +1405,10 @@
             }
           }
           if (touch !== touchTem) {
-            touch ? addEvents(container2, touchEvents, options.preventScrollOnTouch) : removeEvents(container2, touchEvents);
+            touch ? addEvents(container, touchEvents, options.preventScrollOnTouch) : removeEvents(container, touchEvents);
           }
           if (mouseDrag !== mouseDragTem) {
-            mouseDrag ? addEvents(container2, dragEvents) : removeEvents(container2, dragEvents);
+            mouseDrag ? addEvents(container, dragEvents) : removeEvents(container, dragEvents);
           }
           if (autoplay !== autoplayTem) {
             if (autoplay) {
@@ -1428,7 +1428,7 @@
             }
           }
           if (autoplayHoverPause !== autoplayHoverPauseTem) {
-            autoplayHoverPause ? addEvents(container2, hoverEvents) : removeEvents(container2, hoverEvents);
+            autoplayHoverPause ? addEvents(container, hoverEvents) : removeEvents(container, hoverEvents);
           }
           if (autoplayResetOnVisibility !== autoplayResetOnVisibilityTem) {
             autoplayResetOnVisibility ? addEvents(doc, visibilityEvent) : removeEvents(doc, visibilityEvent);
@@ -1484,7 +1484,7 @@
               }
               if (horizontal) {
                 if (carousel) {
-                  container2.style.width = getContainerWidth(fixedWidth, gutter, items);
+                  container.style.width = getContainerWidth(fixedWidth, gutter, items);
                 }
                 var str = getSlideWidthStyle(fixedWidth, gutter, items) + getSlideGutterStyle(gutter);
                 removeCSSRule(sheet, getCssRulesLength(sheet) - 1);
@@ -1640,8 +1640,8 @@
             return;
           }
           sheet.disabled = true;
-          container2.className = container2.className.replace(newContainerClasses.substring(1), "");
-          removeAttrs(container2, ["style"]);
+          container.className = container.className.replace(newContainerClasses.substring(1), "");
+          removeAttrs(container, ["style"]);
           if (loop) {
             for (var j = cloneCount; j--; ) {
               if (carousel) {
@@ -1669,7 +1669,7 @@
             return;
           }
           sheet.disabled = false;
-          container2.className += newContainerClasses;
+          container.className += newContainerClasses;
           doContainerTransformSilent();
           if (loop) {
             for (var j = cloneCount; j--; ) {
@@ -2027,14 +2027,14 @@
           return val2;
         }
         function doContainerTransformSilent(val2) {
-          resetDuration(container2, "0s");
+          resetDuration(container, "0s");
           doContainerTransform(val2);
         }
         function doContainerTransform(val2) {
           if (val2 == null) {
             val2 = getContainerTransformValue();
           }
-          container2.style[transformAttr] = transformPrefix + val2 + transformPostfix;
+          container.style[transformAttr] = transformPrefix + val2 + transformPostfix;
         }
         function animateSlide(number, classOut, classIn, isOut) {
           var l = number + items;
@@ -2058,14 +2058,14 @@
         }
         var transformCore = function() {
           return carousel ? function() {
-            resetDuration(container2, "");
+            resetDuration(container, "");
             if (TRANSITIONDURATION || !speed) {
               doContainerTransform();
-              if (!speed || !isVisible(container2)) {
+              if (!speed || !isVisible(container)) {
                 onTransitionEnd();
               }
             } else {
-              jsTransform(container2, transformAttr, transformPrefix, transformPostfix, getContainerTransformValue(), speed, onTransitionEnd);
+              jsTransform(container, transformAttr, transformPrefix, transformPostfix, getContainerTransformValue(), speed, onTransitionEnd);
             }
             if (!horizontal) {
               updateContentWrapperHeight();
@@ -2078,7 +2078,7 @@
             addEvents(slideItems[index], eve);
             animateSlide(indexCached, animateIn, animateOut, true);
             animateSlide(index, animateNormal, animateIn);
-            if (!TRANSITIONEND || !ANIMATIONEND || !speed || !isVisible(container2)) {
+            if (!TRANSITIONEND || !ANIMATIONEND || !speed || !isVisible(container)) {
               onTransitionEnd();
             }
           };
@@ -2118,7 +2118,7 @@
                 addClass(item, animateNormal);
               }
             }
-            if (!event || !carousel && event.target.parentNode === container2 || event.target === container2 && strTrans(event.propertyName) === strTrans(transformAttr)) {
+            if (!event || !carousel && event.target.parentNode === container || event.target === container && strTrans(event.propertyName) === strTrans(transformAttr)) {
               if (!updateIndexBeforeTransform) {
                 var indexTem = index;
                 updateIndex();
@@ -2404,8 +2404,8 @@
           lastPosition.x = initPosition.x = $2.clientX;
           lastPosition.y = initPosition.y = $2.clientY;
           if (carousel) {
-            translateInit = parseFloat(container2.style[transformAttr].replace(transformPrefix, ""));
-            resetDuration(container2, "0s");
+            translateInit = parseFloat(container.style[transformAttr].replace(transformPrefix, ""));
+            resetDuration(container, "0s");
           }
         }
         function onPanMove(e) {
@@ -2465,7 +2465,7 @@
               x += percentageX;
               x += "%";
             }
-            container2.style[transformAttr] = transformPrefix + x + transformPostfix;
+            container.style[transformAttr] = transformPrefix + x + transformPostfix;
           }
         }
         function onPanEnd(e) {
@@ -2475,7 +2475,7 @@
               rafIndex = null;
             }
             if (carousel) {
-              resetDuration(container2, "");
+              resetDuration(container, "");
             }
             panStart = false;
             var $2 = getEvent(e);
@@ -2565,7 +2565,7 @@
         }
         function info(e) {
           return {
-            container: container2,
+            container,
             slideItems,
             navContainer,
             navItems,
@@ -2612,9 +2612,9 @@
 
   // node_modules/@shopify/theme-sections/section.js
   var SECTION_ID_ATTR = "data-section-id";
-  function Section(container2, properties) {
-    this.container = validateContainerElement(container2);
-    this.id = container2.getAttribute(SECTION_ID_ATTR);
+  function Section(container, properties) {
+    this.container = validateContainerElement(container);
+    this.id = container.getAttribute(SECTION_ID_ATTR);
     this.extensions = [];
     Object.assign(this, validatePropertiesObject(properties));
     this.onLoad();
@@ -2636,14 +2636,14 @@
       }
     }
   };
-  function validateContainerElement(container2) {
-    if (!(container2 instanceof Element)) {
+  function validateContainerElement(container) {
+    if (!(container instanceof Element)) {
       throw new TypeError("Theme Sections: Attempted to load section. The section container provided is not a DOM element.");
     }
-    if (container2.getAttribute(SECTION_ID_ATTR) === null) {
+    if (container.getAttribute(SECTION_ID_ATTR) === null) {
       throw new Error("Theme Sections: The section container provided does not have an id assigned to the " + SECTION_ID_ATTR + " attribute.");
     }
-    return container2;
+    return container;
   }
   function validatePropertiesObject(value) {
     if (typeof value !== "undefined" && typeof value !== "object" || value === null) {
@@ -2691,8 +2691,8 @@
     if (typeof registered[type] !== "undefined") {
       throw new Error('Theme Sections: A section of type "' + type + '" has already been registered. You cannot register the same section type twice');
     }
-    function TypedSection(container2) {
-      Section.call(this, container2, properties);
+    function TypedSection(container) {
+      Section.call(this, container, properties);
     }
     TypedSection.constructor = Section;
     TypedSection.prototype = Object.create(Section.prototype);
@@ -2710,17 +2710,17 @@
       if (typeof TypedSection === "undefined") {
         return;
       }
-      containers = containers.filter(function(container2) {
-        if (isInstance(container2)) {
+      containers = containers.filter(function(container) {
+        if (isInstance(container)) {
           return false;
         }
-        if (container2.getAttribute(SECTION_TYPE_ATTR) === null) {
+        if (container.getAttribute(SECTION_TYPE_ATTR) === null) {
           return false;
         }
-        if (container2.getAttribute(SECTION_TYPE_ATTR) !== type) {
+        if (container.getAttribute(SECTION_TYPE_ATTR) !== type) {
           return true;
         }
-        instances.push(new TypedSection(container2));
+        instances.push(new TypedSection(container));
         return false;
       });
     });
@@ -2742,9 +2742,9 @@
     }
     if (selector instanceof Element || firstElement instanceof Element) {
       var containers = normalizeContainers(selector);
-      containers.forEach(function(container2) {
+      containers.forEach(function(container) {
         filteredInstances = filteredInstances.concat(instances.filter(function(instance) {
-          return instance.container === container2;
+          return instance.container === container;
         }));
       });
     } else if (typeof selector === "string" || typeof firstElement === "string") {
@@ -2802,17 +2802,17 @@
   if (window.Shopify.designMode) {
     document.addEventListener("shopify:section:load", function(event) {
       var id = event.detail.sectionId;
-      var container2 = event.target.querySelector("[" + SECTION_ID_ATTR2 + '="' + id + '"]');
-      if (container2 !== null) {
-        load2(container2.getAttribute(SECTION_TYPE_ATTR), container2);
+      var container = event.target.querySelector("[" + SECTION_ID_ATTR2 + '="' + id + '"]');
+      if (container !== null) {
+        load2(container.getAttribute(SECTION_TYPE_ATTR), container);
       }
     });
     document.addEventListener("shopify:section:unload", function(event) {
       var id = event.detail.sectionId;
-      var container2 = event.target.querySelector("[" + SECTION_ID_ATTR2 + '="' + id + '"]');
-      var instance = getInstances(container2)[0];
+      var container = event.target.querySelector("[" + SECTION_ID_ATTR2 + '="' + id + '"]');
+      var instance = getInstances(container)[0];
       if (typeof instance === "object") {
-        unload(container2);
+        unload(container);
       }
     });
     document.addEventListener("shopify:section:select", function(event) {
@@ -2869,7 +2869,7 @@
       const compare_price_element = this.container.querySelector(".product-price--old");
       const product_title_element = this.container.querySelector(".product-name");
       const product_sku_element = this.container.querySelector(".product-sku span");
-      const my_form = this.container.querySelector("#main-product-form");
+      const product_form = this.container.querySelector("#main-product-form");
       btn_minus.addEventListener("click", function() {
         var qty = parseInt(quantity.value);
         if (qty != 1) {
@@ -2894,17 +2894,16 @@
           }
         });
       });
-      my_form.addEventListener("submit", (e) => {
+      product_form.addEventListener("submit", (e) => {
         e.preventDefault();
-        const product_selected = data.filter((item, index) => {
-          return item != null && input_arr[index].checked;
-        });
-        const items = product_selected.map((item) => {
-          return {
-            "id": item.id,
-            "quantity": 1
-          };
-        });
+        const id = this.container.querySelector(".product-size__list li.active").dataset.id;
+        const qty = this.container.querySelector("input.product-qty").value;
+        const items = [
+          {
+            "id": id,
+            "quantity": parseInt(qty)
+          }
+        ];
         let formData = {
           "items": items
         };
@@ -2914,7 +2913,6 @@
           dataType: "json",
           data: formData,
           success: function(res) {
-            toast(container, "Add to cart success!");
           },
           error: function(e2) {
             console.log(e2);

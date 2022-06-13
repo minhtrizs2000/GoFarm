@@ -1,0 +1,284 @@
+<link rel="stylesheet" href="{{ 'nouislider.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'collection.css' | asset_url }}">
+<script src="{{ 'collection.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'range-slider.js' | asset_url }}" defer="defer"></script>
+<script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+
+<div class="section-container" data-section-type="collection" data-section-id="{{section.id}}"  id="ProductGridContainer">
+    <div class="collection-total">
+        <h1 class="collection-total__title">{{ collection.title }}</h1>
+        <span class="collection-total__counter" id="ProductCountDesktop">({{ collection.all_products_count }})</span>
+    </div>
+    <div class="collection-wrapper">
+        <facet-filters-form class="collection-sidebar"
+        x-data="{
+            loading: false,
+          }"
+          @filter-updated.window="$nextTick(() => {
+            const queryString = new URLSearchParams(new FormData($refs.filter_form)).toString()
+            
+            loading = true;
+            fetch('/collections/{{ collection.handle }}?' + queryString)
+              .then(response => response.text())
+              .then(data => {
+                let html_div = document.createElement('div');
+                html_div.innerHTML = data;
+                let html_dom = html_div.querySelector('#ProductGridContainer').innerHTML;
+                document.querySelector('#ProductGridContainer').innerHTML = html_dom;
+                createRangeSlider();
+                // update url without refreshing the page 
+                history.replaceState(null, null, '?' + queryString);
+              })
+              .catch(error => console.error('Error:', error))
+              .finally(() => loading = false);
+            
+          })">
+            <form class="filter-form" id="FacetFiltersForm" x-ref="filter_form">
+                {%- for filter in collection.filters -%}
+                  <div class="filter-group">
+                      {%- case filter.type -%}
+                        {%- when 'boolean' or 'list' -%}
+                            {% if filter.label == "Product type" %}
+                                <ul class="filter-group__list js-filter" data-index="{{ forloop.index }}">
+                                    {%- for filter_value in filter.values -%}
+                                        <li class="filter-group__list-item">
+                                        {% if filter_value.label == 'Fruits' %}
+                                            <details>
+                                                <summary>
+                                                    <a href="/collection/fruits"> {{ filter_value.label }}</a>
+                                                </summary>
+                                                <div class="fruits-group">
+                                                    <div class="fruits-group__item"><a href="#">Apple</a></div>
+                                                    <div class="fruits-group__item"><a href="#">Pear</a></div>
+                                                    <div class="fruits-group__item"><a href="#">Banana</a></div>
+                                                    <div class="fruits-group__item"><a href="#">Avocado</a></div>
+                                                    <div class="fruits-group__item"><a href="#">Dragon fruits</a></div>
+                                                </div>
+                                            </details>
+                                        {% else %}
+                                                <a href="/collection/fruits"> {{ filter_value.label }}</a>
+                                        {% endif %}
+                                        </li>
+                                    {%- endfor -%}
+                                </ul>
+                            {% elsif filter.label != "Size" and filter.label != "Availability" %}
+                                <hr>
+                                <div class="filter-group__title">{{ filter.label }}</div>
+                                <ul class="filter-group__list js-filter" data-index="{{ forloop.index }}">
+                                    {%- for filter_value in filter.values -%}
+                                        <li class="filter-group__list-item">
+                                            <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
+                                                <input type="checkbox"
+                                                @change="$dispatch('filter-updated')"
+                                                name="{{ filter_value.param_name }}"
+                                                value="{{ filter_value.value }}"
+                                                id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
+                                                {% if filter_value.active -%}checked{%- endif %}
+                                                {% if filter_value.count == 0 and filter_value.active == false -%}disabled{%- endif %}
+                                                >
+                                                {{ filter_value.label }}
+                                            </label>
+                                        </li>
+                                    {%- endfor -%}
+                                </ul>
+                            {% endif %}
+                         
+                        {%- when 'price_range' -%}
+                            <hr>
+                            <div class="filter-group__title filter-group__title--2">By {{ filter.label }}</div>
+                            <price-range class="filter-group__price-range" data-index="{{ forloop.index }}">
+                                <div class="filter-group__price-range-slider" id="price-range-slider-{{ section.id }}">
+                                </div>
+                                <div class="filter-group__price-range-text">
+                                    <div class="filter-group__price-range-from">
+                                        <span>{{ cart.currency.symbol }}</span>
+                                        <input name="{{ filter.min_value.param_name }}"
+                                            id="Filter-{{ filter.min_value.param_name }}"
+                                            @change="$dispatch('filter-updated')"
+                                            {% if filter.min_value.value -%}
+                                            value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                                            {%- endif %}
+                                            type="number"
+                                            min="0"
+                                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                        >
+                                    </div>
+                                    
+                                    <i class="fa-solid fa-minus filter-group__price-range-icon"></i>
+                                   
+                                    <div class="filter-group__price-range-to">
+                                        <span>{{ cart.currency.symbol }}</span>
+                                        <input name="{{ filter.max_value.param_name }}"
+                                            id="Filter-{{ filter.max_value.param_name }}"
+                                            @change="$dispatch('filter-updated')"
+                                            {% if filter.max_value.value -%}
+                                                value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                                            {%- endif %}
+                                            type="number"
+                                            min="0"
+                                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                        >
+                                    </div>
+                                </div>
+                            </price-range>
+                            <div class="filter-group__submit">
+                                <input type="submit" value="Filter">
+                            </div>
+                      {%- endcase -%}
+                  </div>
+                {%- endfor -%}
+            </form>
+        </facet-filters-form>
+      
+        <div class="collection-grid">
+            <div class="collection-topbar">
+                <div class="collection-viewmode">
+                    <div class="collection-viewmode__column collection-viewmode--1-column">
+                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 1.5C0 0.671573 0.671573 0 1.5 0H13.5C14.3284 0 15 0.671573 15 1.5C15 2.32843 14.3284 3 13.5 3H1.5C0.671573 3 0 2.32843 0 1.5Z" fill="#B3B3B3"/>
+                            <path d="M0 7.5C0 6.67157 0.671573 6 1.5 6H13.5C14.3284 6 15 6.67157 15 7.5C15 8.32843 14.3284 9 13.5 9H1.5C0.671573 9 0 8.32843 0 7.5Z" fill="#B3B3B3"/>
+                            <path d="M0 13.5C0 12.6716 0.671573 12 1.5 12H13.5C14.3284 12 15 12.6716 15 13.5C15 14.3284 14.3284 15 13.5 15H1.5C0.671573 15 0 14.3284 0 13.5Z" fill="#B3B3B3"/>
+                        </svg>
+                    </div>
+                    <div class="collection-viewmode__column collection-viewmode--2-column">
+                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 3C0 1.34315 1.34315 0 3 0C4.65685 0 6 1.34315 6 3C6 4.65685 4.65685 6 3 6C1.34315 6 0 4.65685 0 3Z" fill="#B3B3B3"/>
+                            <path d="M9 3C9 1.34315 10.3431 0 12 0C13.6569 0 15 1.34315 15 3C15 4.65685 13.6569 6 12 6C10.3431 6 9 4.65685 9 3Z" fill="#B3B3B3"/>
+                            <path d="M0 12C0 10.3431 1.34315 9 3 9C4.65685 9 6 10.3431 6 12C6 13.6569 4.65685 15 3 15C1.34315 15 0 13.6569 0 12Z" fill="#B3B3B3"/>
+                            <path d="M9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12Z" fill="#B3B3B3"/>
+                        </svg>
+                            
+                    </div>
+                    <div class="collection-viewmode__column collection-viewmode--3-column">
+                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 1.5C0 0.671573 0.671573 0 1.5 0C2.32843 0 3 0.671573 3 1.5C3 2.32843 2.32843 3 1.5 3C0.671573 3 0 2.32843 0 1.5Z" fill="#05A845"/>
+                            <path d="M6 1.5C6 0.671573 6.67157 0 7.5 0C8.32843 0 9 0.671573 9 1.5C9 2.32843 8.32843 3 7.5 3C6.67157 3 6 2.32843 6 1.5Z" fill="#05A845"/>
+                            <path d="M12 1.5C12 0.671573 12.6716 0 13.5 0C14.3284 0 15 0.671573 15 1.5C15 2.32843 14.3284 3 13.5 3C12.6716 3 12 2.32843 12 1.5Z" fill="#05A845"/>
+                            <path d="M0 7.5C0 6.67157 0.671573 6 1.5 6C2.32843 6 3 6.67157 3 7.5C3 8.32843 2.32843 9 1.5 9C0.671573 9 0 8.32843 0 7.5Z" fill="#05A845"/>
+                            <path d="M6 7.5C6 6.67157 6.67157 6 7.5 6C8.32843 6 9 6.67157 9 7.5C9 8.32843 8.32843 9 7.5 9C6.67157 9 6 8.32843 6 7.5Z" fill="#05A845"/>
+                            <path d="M12 7.5C12 6.67157 12.6716 6 13.5 6C14.3284 6 15 6.67157 15 7.5C15 8.32843 14.3284 9 13.5 9C12.6716 9 12 8.32843 12 7.5Z" fill="#05A845"/>
+                            <path d="M0 13.5C0 12.6716 0.671573 12 1.5 12C2.32843 12 3 12.6716 3 13.5C3 14.3284 2.32843 15 1.5 15C0.671573 15 0 14.3284 0 13.5Z" fill="#05A845"/>
+                            <path d="M6 13.5C6 12.6716 6.67157 12 7.5 12C8.32843 12 9 12.6716 9 13.5C9 14.3284 8.32843 15 7.5 15C6.67157 15 6 14.3284 6 13.5Z" fill="#05A845"/>
+                            <path d="M12 13.5C12 12.6716 12.6716 12 13.5 12C14.3284 12 15 12.6716 15 13.5C15 14.3284 14.3284 15 13.5 15C12.6716 15 12 14.3284 12 13.5Z" fill="#05A845"/>
+                            </svg>
+                            
+                    </div>
+                    <div class="collection-viewmode__column collection-viewmode--5-column">
+                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 1.5C0 0.671573 0.671573 0 1.5 0C2.32843 0 3 0.671573 3 1.5C3 2.32843 2.32843 3 1.5 3C0.671573 3 0 2.32843 0 1.5Z" fill="#B3B3B3"/>
+                            <path d="M4 1.5C4 0.671573 4.67157 0 5.5 0C6.32843 0 7 0.671573 7 1.5C7 2.32843 6.32843 3 5.5 3C4.67157 3 4 2.32843 4 1.5Z" fill="#B3B3B3"/>
+                            <path d="M8 1.5C8 0.671573 8.67157 0 9.5 0C10.3284 0 11 0.671573 11 1.5C11 2.32843 10.3284 3 9.5 3C8.67157 3 8 2.32843 8 1.5Z" fill="#B3B3B3"/>
+                            <path d="M12 1.5C12 0.671573 12.6716 0 13.5 0C14.3284 0 15 0.671573 15 1.5C15 2.32843 14.3284 3 13.5 3C12.6716 3 12 2.32843 12 1.5Z" fill="#B3B3B3"/>
+                            <path d="M0 5.5C0 4.67157 0.671573 4 1.5 4C2.32843 4 3 4.67157 3 5.5C3 6.32843 2.32843 7 1.5 7C0.671573 7 0 6.32843 0 5.5Z" fill="#B3B3B3"/>
+                            <path d="M4 5.5C4 4.67157 4.67157 4 5.5 4C6.32843 4 7 4.67157 7 5.5C7 6.32843 6.32843 7 5.5 7C4.67157 7 4 6.32843 4 5.5Z" fill="#B3B3B3"/>
+                            <path d="M8 5.5C8 4.67157 8.67157 4 9.5 4C10.3284 4 11 4.67157 11 5.5C11 6.32843 10.3284 7 9.5 7C8.67157 7 8 6.32843 8 5.5Z" fill="#B3B3B3"/>
+                            <path d="M12 5.5C12 4.67157 12.6716 4 13.5 4C14.3284 4 15 4.67157 15 5.5C15 6.32843 14.3284 7 13.5 7C12.6716 7 12 6.32843 12 5.5Z" fill="#B3B3B3"/>
+                            <path d="M0 9.5C0 8.67157 0.671573 8 1.5 8C2.32843 8 3 8.67157 3 9.5C3 10.3284 2.32843 11 1.5 11C0.671573 11 0 10.3284 0 9.5Z" fill="#B3B3B3"/>
+                            <path d="M0 13.5C0 12.6716 0.671573 12 1.5 12C2.32843 12 3 12.6716 3 13.5C3 14.3284 2.32843 15 1.5 15C0.671573 15 0 14.3284 0 13.5Z" fill="#B3B3B3"/>
+                            <path d="M4 9.5C4 8.67157 4.67157 8 5.5 8C6.32843 8 7 8.67157 7 9.5C7 10.3284 6.32843 11 5.5 11C4.67157 11 4 10.3284 4 9.5Z" fill="#B3B3B3"/>
+                            <path d="M4 13.5C4 12.6716 4.67157 12 5.5 12C6.32843 12 7 12.6716 7 13.5C7 14.3284 6.32843 15 5.5 15C4.67157 15 4 14.3284 4 13.5Z" fill="#B3B3B3"/>
+                            <path d="M8 9.5C8 8.67157 8.67157 8 9.5 8C10.3284 8 11 8.67157 11 9.5C11 10.3284 10.3284 11 9.5 11C8.67157 11 8 10.3284 8 9.5Z" fill="#B3B3B3"/>
+                            <path d="M8 13.5C8 12.6716 8.67157 12 9.5 12C10.3284 12 11 12.6716 11 13.5C11 14.3284 10.3284 15 9.5 15C8.67157 15 8 14.3284 8 13.5Z" fill="#B3B3B3"/>
+                            <path d="M12 9.5C12 8.67157 12.6716 8 13.5 8C14.3284 8 15 8.67157 15 9.5C15 10.3284 14.3284 11 13.5 11C12.6716 11 12 10.3284 12 9.5Z" fill="#B3B3B3"/>
+                            <path d="M12 13.5C12 12.6716 12.6716 12 13.5 12C14.3284 12 15 12.6716 15 13.5C15 14.3284 14.3284 15 13.5 15C12.6716 15 12 14.3284 12 13.5Z" fill="#B3B3B3"/>
+                            </svg>
+                            
+                    </div>
+                </div>
+                <div class="collection-sortmode">
+                    <span>Sort by</span>
+                    <select id="sort-by">
+                        {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+                      
+                        {% for option in collection.sort_options %}
+                          <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+                            {{ option.name }}
+                          </option>
+                        {% endfor %}
+                      </select>
+                </div>
+            </div>
+            <div class="collection-content">
+                    {% assign collection_type = section.settings.collection_type %}
+                    {% if collection_type == "pagination" %}
+                        {% paginate collection.products by 5 %}
+                            <div class="row" id="product-grid" data-id="{{ section.id }}">
+                                {% for product in collection.products %}
+                                    {% for variant in product.variants %}
+                                        <div class="col-4">
+                                            {% render 'card-product-variant', variant: variant %}
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>no matches</p>
+                                {% endfor %}
+                            </div>
+                        {% if paginate.pages > 1 %}
+                            <div class="collection-pagination">
+                                {{ paginate | default_pagination }}
+                            </div>
+                        {% endif %}
+        
+                        {% endpaginate %}
+                    {% endif %}
+            </div>
+        </div>
+    </div>      
+</div>
+
+<!-- 
+<script>
+    Shopify.queryParams = {};
+  
+    // Preserve existing query parameters
+    if (location.search.length) {
+      var params = location.search.substr(1).split('&');
+  
+      for (var i = 0; i < params.length; i++) {
+        var keyValue = params[i].split('=');
+  
+        if (keyValue.length) {
+          Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+        }
+      }
+    }
+  
+    // Update sort_by query parameter on select change
+    document.querySelector('#sort-by').addEventListener('change', function(e) {
+      var value = e.target.value;
+  
+      Shopify.queryParams.sort_by = value;
+      location.search = new URLSearchParams(Shopify.queryParams).toString();
+    });
+</script> -->
+
+{% schema %}
+{
+    "name": "Collection",
+    "class": "section",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "select",
+            "id": "collection_type",
+            "label": "Select collection type",
+            "options": [
+                {
+                    "value": "pagination",
+                    "label": "Pagination"
+                },
+                {
+                    "value": "infinite_load",
+                    "label": "Infinite Load"
+                }
+            ],
+            "default": "pagination"
+        }
+    ],
+    "presets": [
+      {
+        "name": "Collection"
+      }
+    ]
+}
+{% endschema %}

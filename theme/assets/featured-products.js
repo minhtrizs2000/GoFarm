@@ -2616,9 +2616,13 @@
     onLoad: function() {
       var slider = (0, import_tiny_slider.tns)({
         container: ".featured__slider",
-        items: 1,
-        slideBy: "page",
-        autoplay: true
+        items: 6,
+        slideBy: 1,
+        autoplay: true,
+        controls: false,
+        autoplayButtonOutput: false,
+        mouseDrag: true,
+        navPosition: "bottom"
       });
     }
   });

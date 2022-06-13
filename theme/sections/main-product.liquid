@@ -83,9 +83,9 @@
                     <ul class="product-size__list">
                         {% for size_option in product.options_by_name['Size'].values %}
                                 {% if forloop.first == true %}
-                                    <li class="active">{{ size_option | default: 'size' }}</li>
+                                    <li class="active" data-id="{{ product.variants[forloop.index0].id }}">{{ size_option | default: 'size' }}</li>
                                 {% else %}
-                                    <li>{{ size_option | default: 'size' }}</li>
+                                    <li data-id="{{ product.variants[forloop.index0].id }}">{{ size_option | default: 'size' }}</li>
                                 {% endif %}
                         {% endfor %}
                     </ul>
@@ -175,9 +175,9 @@
                         <ul class="product-size__list">
                             {% for size_option in product.options_by_name['Size'].values %}
                                 {% if forloop.first == true %}
-                                    <li class="active">{{ size_option | default: 'size' }}</li>
+                                    <li class="active" data-id="{{ product.variants[forloop.index0].id }}">{{ size_option | default: 'size' }}</li>
                                 {% else %}
-                                    <li>{{ size_option | default: 'size' }}</li>
+                                    <li data-id="{{ product.variants[forloop.index0].id }}">{{ size_option | default: 'size' }}</li>
                                 {% endif %}
                             {% endfor %}
                         </ul>
@@ -188,7 +188,7 @@
                             <span>Quantity</span>
                             <span class="stock-number">Only {{ product.variants[0].inventory_quantity }} left in stock!</span>
                         </div>
-                        <form action="" method="post">
+                        <form action="/cart/add" method="post" id="main-product-form">
                             <div class="product-cart">
                                 <div class="product-quantity">
                                     <button type="button" class="button-minus">

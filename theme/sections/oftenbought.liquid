@@ -8,12 +8,38 @@
     assign bundle_item_6 = product.metafields.my_fields.bundle_item_6.value
 %}
 
+<style>
+    .often__container{
+        max-width: 1240px;
+        margin: 0 auto;
+    }
+    .often__title{
+        color: #191919;
+        font-weight: 500;
+        font-size: 35px;
+        line-height: 120%;
+    }
+    .product__often__img{
+        position: relative;
+        margin-bottom: 15px;
+    }
+    .product__often__icon{
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        bottom: 0;
+        padding: 10px;
+        border: 1px solid #E6E6E6;
+        display: flex;
+        justify-items: center;
+        align-items: center;
+    }
+</style>
+
 <div class="often__container" data-section-type="product-often" data-section-id="{{section.id}}">
-    <div class="often__wrapper">
-        {%- if section.settings.title != blank -%}
-          <h0 class="often__title">{{ section.settings.title | escape }}</h0>
-        {%- endif -%}
-    </div>
+    {%- if section.settings.title != blank -%}
+        <h0 class="often__title">{{ section.settings.title | escape }}</h0>
+    {%- endif -%}
     <div class="product__often__container">
         <div class="row">
             {% if bundle_item_1 != blank %}

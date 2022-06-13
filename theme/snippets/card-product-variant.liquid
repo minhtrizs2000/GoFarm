@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="{{ 'card-product-variant.css' | asset_url }}">
+
+<div class="card-variant">
+    <div class="card-variant__image">
+        {% if variant.image %}
+            {{ variant.image | image_url: width: 190, height: 190 | image_tag }}
+        {% else %}
+            {{ 'image' | placeholder_svg_tag }}
+        {% endif %}
+        <div class="card-variant__icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_1201_4916)">
+                <path d="M10.5 11.1565H4.71275C4.50606 11.1565 4.30603 11.0833 4.14811 10.95C3.9902 10.8166 3.88459 10.6316 3.85 10.4279L2.31175 1.3862C2.27704 1.18253 2.17138 0.997711 2.01347 0.864469C1.85557 0.731227 1.65561 0.658159 1.449 0.658203H0.875" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9.40625 12.4688C9.36299 12.4688 9.32069 12.4816 9.28472 12.5056C9.24875 12.5297 9.22071 12.5638 9.20415 12.6038C9.18759 12.6438 9.18326 12.6877 9.1917 12.7302C9.20014 12.7726 9.22098 12.8116 9.25157 12.8422C9.28216 12.8728 9.32114 12.8936 9.36357 12.902C9.40601 12.9105 9.44999 12.9062 9.48996 12.8896C9.52993 12.873 9.5641 12.845 9.58813 12.809C9.61217 12.7731 9.625 12.7308 9.625 12.6875C9.625 12.6295 9.60195 12.5738 9.56093 12.5328C9.51991 12.4918 9.46427 12.4688 9.40625 12.4688Z" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5.03125 12.4688C4.98799 12.4688 4.94569 12.4816 4.90972 12.5056C4.87375 12.5297 4.84571 12.5638 4.82915 12.6038C4.81259 12.6438 4.80826 12.6877 4.8167 12.7302C4.82514 12.7726 4.84598 12.8116 4.87657 12.8422C4.90716 12.8728 4.94614 12.8936 4.98857 12.902C5.03101 12.9105 5.07499 12.9062 5.11496 12.8896C5.15493 12.873 5.1891 12.845 5.21313 12.809C5.23717 12.7731 5.25 12.7308 5.25 12.6875C5.25 12.6295 5.22695 12.5738 5.18593 12.5328C5.14491 12.4918 5.08927 12.4688 5.03125 12.4688" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3.52717 8.53163H10.5686C10.9588 8.53159 11.3378 8.40113 11.6454 8.161C11.9529 7.92087 12.1714 7.58484 12.2661 7.2063L13.1119 3.82296C13.1281 3.75844 13.1293 3.69109 13.1155 3.62602C13.1017 3.56096 13.0732 3.4999 13.0323 3.44748C12.9913 3.39507 12.939 3.35267 12.8792 3.32353C12.8194 3.29439 12.7538 3.27926 12.6873 3.2793H2.63409" stroke="#05A845" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_1201_4916">
+                <rect width="14" height="14" fill="white" transform="matrix(-1 0 0 1 14 0)"/>
+                </clipPath>
+                </defs>
+            </svg>
+        </div>
+    </div>
+    <div class="card-variant__text">
+        <div class="card-variant__name">{{ variant.product.title }}</div>
+        <div class="card-variant__size">{{ variant.title }}</div>
+        <div class="card-variant__price">
+            <span class="price-current">{{ variant.price | money }}</span>
+            {% if variant.compare_at_price %}
+                <span class="price-old">{{ variant.compare_at_price | money }}</span>
+            {% endif %}
+        </div>
+    </div>
+</div>

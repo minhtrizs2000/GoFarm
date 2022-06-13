@@ -10,11 +10,13 @@
     {{ content_for_header }} <!-- Header hook for plugins -->
     {{ 'application.css' | asset_url | stylesheet_tag }}
     {{ 'application.js' | asset_url | script_tag }}
-    {{ 'base.css' | asset_url | stylesheet_tag }}
-  
+
     {{ '//cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css' | stylesheet_tag }}
     {{ '//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js' | script_tag }}
     {{ '//cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js' | script_tag }}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+  
   </head>
 <body>
   {% section 'announcement-bar' %}
