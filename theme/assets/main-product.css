@@ -69,6 +69,9 @@
 
 .slider-item {
     height: 485px;
+}
+
+.slider-item-inner {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -459,4 +462,8 @@
 .product-sku span{
     font-size: 14px;
     color: var(--text-color-3);
+}
+
+.thumbnail-left .tns-outer {
+    max-width: 422px;
 }

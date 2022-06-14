@@ -2,16 +2,18 @@
 <link rel="stylesheet" href="{{ 'collection.css' | asset_url }}">
 <script src="{{ 'collection.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'range-slider.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'nouislider.js' | asset_url }}" defer="defer"></script>
 <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
 
+{% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
 
 <div class="section-container" data-section-type="collection" data-section-id="{{section.id}}"  id="collection-container">
     <div class="collection-total">
         <h1 class="collection-total__title">{{ collection.title }}</h1>
-        <span class="collection-total__counter" id="ProductCountDesktop">({{ collection.all_products_count }})</span>
+        <span class="collection-total__counter">({{ collection.all_products_count }})</span>
     </div>
-    <div class="collection-wrapper">
+    <div class="collection-wrapper" x-data="{
+        sort: '{{ sort_by }}',
+    }">
         <facet-filters-form class="collection-sidebar"
         x-data="{
             loading: false,
@@ -20,16 +22,16 @@
             const queryString = new URLSearchParams(new FormData($refs.filter_form)).toString()
             
             loading = true;
-            fetch('/collections/{{ collection.handle }}?' + queryString)
+
+            fetch('/collections/{{ collection.handle }}?' + queryString + '&sort_by=' + sort)
               .then(response => response.text())
               .then(data => {
                 let html_div = document.createElement('div');
                 html_div.innerHTML = data;
-                let html_dom = html_div.querySelector('#collection-container').innerHTML;
-                document.querySelector('#collection-container').innerHTML = html_dom;
-                createRangeSlider();
+                let html_dom = html_div.querySelector('#collection-content').innerHTML;
+                document.querySelector('#collection-content').innerHTML = html_dom;
                 // update url without refreshing the page 
-                history.replaceState(null, null, '?' + queryString);
+                history.replaceState(null, null, '?' + queryString + '&sort_by=' + sort);
               })
               .catch(error => console.error('Error:', error))
               .finally(() => loading = false);
@@ -66,7 +68,7 @@
                             {% elsif filter.label != "Size" and filter.label != "Availability" %}
                                 <hr>
                                 <div class="filter-group__title">{{ filter.label }}</div>
-                                <ul class="filter-group__list js-filter" data-index="{{ forloop.index }}">
+                                <ul class="filter-group__list" data-index="{{ forloop.index }}">
                                     {%- for filter_value in filter.values -%}
                                         <li class="filter-group__list-item">
                                             <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
@@ -101,13 +103,15 @@
                                             value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
                                             {%- endif %}
                                             type="number"
+                                            placeholder="0"
                                             min="0"
                                             max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
                                         >
                                     </div>
-                                    
-                                    <i class="fa-solid fa-minus filter-group__price-range-icon"></i>
-                                   
+                                    <div class="filter-group__price-range-icon">
+                                        <i class="fa-solid fa-minus "></i>
+                                    </div>
+                                                 
                                     <div class="filter-group__price-range-to">
                                         <span>{{ cart.currency.symbol }}</span>
                                         <input name="{{ filter.max_value.param_name }}"
@@ -117,6 +121,8 @@
                                                 value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
                                             {%- endif %}
                                             type="number"
+                                            placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                            value=""
                                             min="0"
                                             max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
                                         >
@@ -135,14 +141,14 @@
         <div class="collection-grid">
             <div class="collection-topbar">
                 <div class="collection-viewmode">
-                    <div class="collection-viewmode__column collection-viewmode--1-column">
+                    <div class="collection-viewmode__column collection-viewmode--1-column" data-col="1">
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 1.5C0 0.671573 0.671573 0 1.5 0H13.5C14.3284 0 15 0.671573 15 1.5C15 2.32843 14.3284 3 13.5 3H1.5C0.671573 3 0 2.32843 0 1.5Z" fill="#B3B3B3"/>
                             <path d="M0 7.5C0 6.67157 0.671573 6 1.5 6H13.5C14.3284 6 15 6.67157 15 7.5C15 8.32843 14.3284 9 13.5 9H1.5C0.671573 9 0 8.32843 0 7.5Z" fill="#B3B3B3"/>
                             <path d="M0 13.5C0 12.6716 0.671573 12 1.5 12H13.5C14.3284 12 15 12.6716 15 13.5C15 14.3284 14.3284 15 13.5 15H1.5C0.671573 15 0 14.3284 0 13.5Z" fill="#B3B3B3"/>
                         </svg>
                     </div>
-                    <div class="collection-viewmode__column collection-viewmode--2-column">
+                    <div class="collection-viewmode__column collection-viewmode--2-column" data-col="2">
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 3C0 1.34315 1.34315 0 3 0C4.65685 0 6 1.34315 6 3C6 4.65685 4.65685 6 3 6C1.34315 6 0 4.65685 0 3Z" fill="#B3B3B3"/>
                             <path d="M9 3C9 1.34315 10.3431 0 12 0C13.6569 0 15 1.34315 15 3C15 4.65685 13.6569 6 12 6C10.3431 6 9 4.65685 9 3Z" fill="#B3B3B3"/>
@@ -151,7 +157,7 @@
                         </svg>
                             
                     </div>
-                    <div class="collection-viewmode__column collection-viewmode--3-column">
+                    <div class="collection-viewmode__column active collection-viewmode--3-column" data-col="3">
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 1.5C0 0.671573 0.671573 0 1.5 0C2.32843 0 3 0.671573 3 1.5C3 2.32843 2.32843 3 1.5 3C0.671573 3 0 2.32843 0 1.5Z" fill="#05A845"/>
                             <path d="M6 1.5C6 0.671573 6.67157 0 7.5 0C8.32843 0 9 0.671573 9 1.5C9 2.32843 8.32843 3 7.5 3C6.67157 3 6 2.32843 6 1.5Z" fill="#05A845"/>
@@ -165,7 +171,7 @@
                             </svg>
                             
                     </div>
-                    <div class="collection-viewmode__column collection-viewmode--5-column">
+                    <div class="collection-viewmode__column collection-viewmode--5-column" data-col="5">
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 1.5C0 0.671573 0.671573 0 1.5 0C2.32843 0 3 0.671573 3 1.5C3 2.32843 2.32843 3 1.5 3C0.671573 3 0 2.32843 0 1.5Z" fill="#B3B3B3"/>
                             <path d="M4 1.5C4 0.671573 4.67157 0 5.5 0C6.32843 0 7 0.671573 7 1.5C7 2.32843 6.32843 3 5.5 3C4.67157 3 4 2.32843 4 1.5Z" fill="#B3B3B3"/>
@@ -190,28 +196,26 @@
                 <div class="collection-sortmode"
                 x-data="{
                     loading: false,
-                    sort: '{{ sort_by }}',
                     sortCollection(){
                       this.loading = true;
-                      fetch('/collections/{{ collection.handle }}?sort_by=' + this.sort)
+                      const queryString = new URLSearchParams(new FormData(document.querySelector('.filter-form'))).toString()
+                      fetch('/collections/{{ collection.handle }}?' + queryString + '&sort_by=' + this.sort)
                         .then(response => response.text())
                         .then(data => {
                           let html_div = document.createElement('div');
                           html_div.innerHTML = data;
-            
-                          let html_dom = html_div.querySelector('#ProductGridContainer').innerHTML;
-                          document.querySelector('#ProductGridContainer').innerHTML = html_dom;
+                          let html_dom = html_div.querySelector('#collection-content').innerHTML;
+                          document.querySelector('#collection-content').innerHTML = html_dom;
+                        
                           // update url without refreshing the page 
-                          history.replaceState(null, null, '?sort_by=' + this.sort);
+                          history.replaceState(null, null, '?' + queryString + '&sort_by=' + this.sort);
                         })
                         .catch(error => console.error('Error:', error))
                         .finally(() => this.loading = false);
                     }
                   }">
                     <span>Sort by</span>
-                    <select id="sort-by">
-                        {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
-                      
+                    <select id="sort-by" x-model="sort" @change="sortCollection()">
                         {% for option in collection.sort_options %}
                           <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
                             {{ option.name }}
@@ -220,110 +224,41 @@
                       </select>
                 </div>
             </div>
-            <div class="collection-content">
-                    {% assign collection_type = section.settings.collection_type %}
-                    {% if collection_type == "pagination" %}
-                        {% paginate collection.products by 5 %}
-                            <div class="row" id="product-grid" data-id="{{ section.id }}">
-                                {% for product in collection.products %}
-                                    {% for variant in product.variants %}
-                                        <div class="col-4">
-                                            {% render 'card-product-variant', variant: variant %}
-                                        </div>
-                                    {% endfor %}
-                                {% else %}
-                                    <p>no matches</p>
-                                {% endfor %}
-                            </div>
-                        {% if paginate.pages > 1 %}
-                            <div class="collection-pagination">
-                                {{ paginate | default_pagination }}
-                            </div>
+
+            {% assign collection_type = section.settings.collection_type %}
+            <div class="collection-content {% if collection_type == 'infinite_loading' %}infinite_loading{% endif %}" id="collection-content"> 
+                    {% paginate collection.products by 10 %}
+                        <div class="row">
+                            {% for product in collection.products %}
+                                <div class="card-wrapper col-4">
+                                    {% render 'card-product', product: product %}
+                                </div>
+                            {% else %}
+                                <p>no matches</p>
+                            {% endfor %}
+                        </div>
+ 
+                        {% if collection_type == 'pagination' %}
+                            {% if paginate.pages > 1 %}
+                                    <div class="collection-pagination">
+                                        {{ paginate | default_pagination }}
+                                    </div>
+                            {% endif %}
+                        {% else %}
+                            <script src="{{ 'infinity_loading.js' | asset_url }}" defer="defer"></script>  
+                            <script id="data-paginate" type="application/ld+json">
+                                {
+                                    "data" : {{ paginate | json }}
+                                }
+                            </script>
                         {% endif %}
-        
-                        {% endpaginate %}
-                    {% endif %}
+                        
+                        
+                    {% endpaginate %}
             </div>
         </div>
     </div>      
 </div>
-
-
-<script>
-    function createRangeSlider(){
-    var range_slider = document.querySelector(`.filter-group__price-range-slider`);
-    var input_min_element = document.querySelector(
-        ".filter-group__price-range-from input"
-    );
-    var input_max_element = document.querySelector(
-        ".filter-group__price-range-to input"
-    );
-    var input_max_value = document
-        .querySelector(".filter-group__price-range-to input")
-        .getAttribute("max");
-    
-    var max_value = parseFloat(input_max_value);
-    var start_value = Math.floor(max_value / 4);
-    var end_value = Math.floor(max_value / 2 + start_value);
-    input_min_element.value = start_value;
-    input_max_element.value = end_value;
-    console.log(start_value, end_value);
-    
-    noUiSlider.create(range_slider, {
-        start: [start_value, end_value],
-        connect: true,
-        step: 1,
-        range: {
-        min: 0,
-        max: max_value,
-        },
-    });
-    
-    range_slider.noUiSlider.on("update", function (values, handle) {
-        var value = values[handle];
-    
-        if (handle) {
-        input_max_element.value = value;
-        } else {
-        input_min_element.value = value;
-        }
-    });
-    
-    input_min_element.addEventListener("change", function () {
-        range_slider.noUiSlider.set([this.value, null]);
-    });
-    
-    input_max_element.addEventListener("change", function () {
-        range_slider.noUiSlider.set([null, this.value]);
-    });  
-    }
-    
-</script>
-<!-- 
-<script>
-    Shopify.queryParams = {};
-  
-    // Preserve existing query parameters
-    if (location.search.length) {
-      var params = location.search.substr(1).split('&');
-  
-      for (var i = 0; i < params.length; i++) {
-        var keyValue = params[i].split('=');
-  
-        if (keyValue.length) {
-          Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
-        }
-      }
-    }
-  
-    // Update sort_by query parameter on select change
-    document.querySelector('#sort-by').addEventListener('change', function(e) {
-      var value = e.target.value;
-  
-      Shopify.queryParams.sort_by = value;
-      location.search = new URLSearchParams(Shopify.queryParams).toString();
-    });
-</script> -->
 
 {% schema %}
 {
@@ -341,8 +276,8 @@
                     "label": "Pagination"
                 },
                 {
-                    "value": "infinite_load",
-                    "label": "Infinite Load"
+                    "value": "infinite_loading",
+                    "label": "Infinite Loading"
                 }
             ],
             "default": "pagination"

@@ -10,7 +10,10 @@
             <div class="slider" id="slider-{{section.id}}">
                 {% for media in product.media %}
                     <div class="slider-item">
-                        {{ media | image_url: width: 380, height: 380 | image_tag }}
+                        <div class="slider-item-inner">
+                            {{ media | image_url: width: 380, height: 380 | image_tag }}
+                        </div>
+                        
                     </div>
                 {% endfor %}
             </div>

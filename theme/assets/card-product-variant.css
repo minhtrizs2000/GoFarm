@@ -1,0 +1,50 @@
+.card-variant {
+    width: 100%;
+    height: auto;
+}
+
+.card-variant__image {
+    position: relative;
+    padding: 15px;
+}
+
+.card-variant__image img {
+    width: 100%;
+    height: auto;
+}
+
+.card-variant__icon {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #E6E6E6;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 32px;
+    cursor: pointer;
+}
+
+.card-variant__text {
+    margin-top: 15px;
+}
+
+.card-variant__name,
+.card-variant__size {
+    font-size: 15px;
+    color: var(--text-color-2);
+}
+
+.card-variant__price .price-current {
+    font-size: 16px;
+    color: var(--green-color);
+    font-weight: 500;
+}
+
+.card-variant__price .price-old {
+    font-size: 16px;
+    color: var(--text-color-4);
+    text-decoration: line-through;
+    margin-left: 10px;
+}

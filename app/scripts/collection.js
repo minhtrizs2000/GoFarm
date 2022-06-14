@@ -3,52 +3,40 @@ import "./common/theme-section";
 
 register("collection", {
   onLoad: function () {
-    // var range_slider = this.container.querySelector(
-    //   `#price-range-slider-${this.id}`
-    // );
-    // var input_min_element = this.container.querySelector(
-    //   ".filter-group__price-range-from input"
-    // );
-    // var input_max_element = this.container.querySelector(
-    //   ".filter-group__price-range-to input"
-    // );
-    // var input_max_value = this.container
-    //   .querySelector(".filter-group__price-range-to input")
-    //   .getAttribute("max");
+    var viewmode_cols = this.container.querySelectorAll(".collection-viewmode__column");
+    var card_wrappers = this.container.querySelectorAll(".card-wrapper");
+    var row = this.container.querySelector("#collection-content .row");
 
-    // var max_value = parseFloat(input_max_value);
-    // var start_value = Math.floor(max_value / 4);
-    // var end_value = Math.floor(max_value / 2 + start_value);
-    // input_min_element.value = start_value;
-    // input_max_element.value = end_value;
-
-    // noUiSlider.create(range_slider, {
-    //   start: [start_value, end_value],
-    //   connect: true,
-    //   step: 1,
-    //   range: {
-    //     min: 0,
-    //     max: max_value,
-    //   },
-    // });
-
-    // range_slider.noUiSlider.on("update", function (values, handle) {
-    //   var value = values[handle];
-
-    //   if (handle) {
-    //     input_max_element.value = value;
-    //   } else {
-    //     input_min_element.value = value;
-    //   }
-    // });
-
-    // input_min_element.addEventListener("change", function () {
-    //   range_slider.noUiSlider.set([this.value, null]);
-    // });
-
-    // input_max_element.addEventListener("change", function () {
-    //   range_slider.noUiSlider.set([null, this.value]);
-    // });
+    viewmode_cols.forEach(function(col){
+      col.addEventListener('click', function(){
+        if (!this.classList.contains('active')) {
+          this.parentElement.querySelector(".active").classList.remove("active");
+          this.classList.add("active");
+          var col = parseInt(this.dataset.col);
+         
+          card_wrappers.forEach(function(item){
+            switch (col) {
+              case 1:
+                item.classList.replace(item.classList[1], 'col-12');
+                break;
+              case 2:
+                item.classList.replace(item.classList[1], 'col-6');
+                break;
+              case 3:
+                item.classList.replace(item.classList[1], 'col-4');
+                break;
+              case 5:
+                item.classList.replace(item.classList[1], 'col');
+                row.classList.add('row-cols-5');
+                break;
+              default:
+                break;
+            }
+          })
+        }
+      });
+    })
+    
   },
 });
 

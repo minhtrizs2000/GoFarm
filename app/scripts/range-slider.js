@@ -13,14 +13,9 @@ function createRangeSlider(){
     .getAttribute("max");
   
   var max_value = parseFloat(input_max_value);
-  var start_value = Math.floor(max_value / 4);
-  var end_value = Math.floor(max_value / 2 + start_value);
-  input_min_element.value = start_value;
-  input_max_element.value = end_value;
-  console.log(start_value, end_value);
-  
+
   noUiSlider.create(range_slider, {
-    start: [start_value, end_value],
+    start: [0, max_value],
     connect: true,
     step: 1,
     range: {
@@ -36,6 +31,16 @@ function createRangeSlider(){
       input_max_element.value = value;
     } else {
       input_min_element.value = value;
+    }
+  });
+
+  range_slider.noUiSlider.on("change", function (values, handle) {
+    if (handle) {
+      const e = new Event("change");
+      input_max_element.dispatchEvent(e);
+    } else {
+      const e = new Event("change");
+      input_min_element.dispatchEvent(e);
     }
   });
   
