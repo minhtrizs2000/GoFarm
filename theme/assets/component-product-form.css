@@ -1,0 +1,104 @@
+.product-form__input {
+  padding: 0;
+  margin: 0 0 1.2rem 0;
+  min-width: fit-content;
+  border: none;
+}
+
+variant-radios {
+  display: block;
+}
+
+.product-form__input input[type="radio"] {
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+  position: absolute;
+  height: 1px;
+  width: 1px;
+}
+
+.product-form__input input[type="radio"] + label {
+  border: 1px solid #f0f2f5;
+  background-color: var(--white-color);
+  color: var(--text-color-3);
+  border-radius: 5px;
+  display: inline-block;
+  margin: 0.7rem 0.5rem 0.2rem 0;
+  padding: 0.35rem 1.4rem;
+  font-size: 1.3rem;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  font-weight: 600;
+}
+
+.product-form__input input[type="radio"] + label:hover {
+  border-color: var(--green-color);
+}
+
+.product-form__input input[type="radio"]:checked + label {
+  border: 2px solid var(--green-color);
+}
+
+/* Product form */
+.product-form {
+  display: block;
+}
+
+.product-form__error-message-wrapper:not([hidden]) {
+  display: flex;
+  align-items: flex-start;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.product-form__error-message-wrapper svg {
+  flex-shrink: 0;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-right: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+/* .product-form__input--dropdown {
+    margin-bottom: 1.6rem;
+} */
+
+.product-form__input .form__label {
+  padding-left: 0;
+}
+
+fieldset.product-form__input .form__label {
+  margin-bottom: 0.2rem;
+}
+
+.product-form__submit {
+  border: none;
+  outline: none;
+  height: 46px;
+  background-color: var(--green-color);
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 0 90px;
+  border-radius: 5px;
+}
+
+.product-form__submit span {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.product-form__submit.loading span {
+  display: none;
+  min-width: 305px;
+}
+
+.product-form__submit-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--white-color);
+}

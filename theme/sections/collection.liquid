@@ -14,6 +14,7 @@
     <div class="collection-wrapper" x-data="{
         sort: '{{ sort_by }}',
     }">
+       
         <facet-filters-form class="collection-sidebar"
         x-data="{
             loading: false,
@@ -37,38 +38,45 @@
               .finally(() => loading = false);
             
           })">
+            <ul class="collections-list">
+                <li class="collections-list__item">
+                    <a href="/collection/fruits">Vegetables</a>
+                </li>
+                <li class="collections-list__item">
+                    <details>
+                        <summary>
+                            <a href="/collection/fruits"> Fruits </a>
+                        </summary>
+                        <div class="fruits-group">
+                            <div class="fruits-group__item"><a href="#">Apple</a></div>
+                            <div class="fruits-group__item"><a href="#">Pear</a></div>
+                            <div class="fruits-group__item"><a href="#">Banana</a></div>
+                            <div class="fruits-group__item"><a href="#">Avocado</a></div>
+                            <div class="fruits-group__item"><a href="#">Dragon fruits</a></div>
+                        </div>
+                    </details>    
+                </li>
+                <li class="collections-list__item">
+                    <a href="/collection/fruits"> Laboratory </a>
+                </li>
+                <li class="collections-list__item">
+                    <a href="/collection/fruits"> Tools </a>
+                </li>
+                <li class="collections-list__item">
+                    <a href="/collection/fruits"> Diagnosis </a>
+                </li>
+                <li class="collections-list__item">
+                    <a href="/collection/fruits"> Equipment </a>
+                </li>
+            </ul>
             <form class="filter-form" id="FacetFiltersForm" x-ref="filter_form">
                 {%- for filter in collection.filters -%}
                   <div class="filter-group">
                       {%- case filter.type -%}
                         {%- when 'boolean' or 'list' -%}
-                            {% if filter.label == "Product type" %}
-                                <ul class="filter-group__list js-filter" data-index="{{ forloop.index }}">
-                                    {%- for filter_value in filter.values -%}
-                                        <li class="filter-group__list-item">
-                                        {% if filter_value.label == 'Fruits' %}
-                                            <details>
-                                                <summary>
-                                                    <a href="/collection/fruits"> {{ filter_value.label }}</a>
-                                                </summary>
-                                                <div class="fruits-group">
-                                                    <div class="fruits-group__item"><a href="#">Apple</a></div>
-                                                    <div class="fruits-group__item"><a href="#">Pear</a></div>
-                                                    <div class="fruits-group__item"><a href="#">Banana</a></div>
-                                                    <div class="fruits-group__item"><a href="#">Avocado</a></div>
-                                                    <div class="fruits-group__item"><a href="#">Dragon fruits</a></div>
-                                                </div>
-                                            </details>
-                                        {% else %}
-                                                <a href="/collection/fruits"> {{ filter_value.label }}</a>
-                                        {% endif %}
-                                        </li>
-                                    {%- endfor -%}
-                                </ul>
-                            {% elsif filter.label != "Size" and filter.label != "Availability" %}
-                                <hr>
-                                <div class="filter-group__title">{{ filter.label }}</div>
-                                <ul class="filter-group__list" data-index="{{ forloop.index }}">
+                            <hr>
+                            <div class="filter-group__title">{{ filter.label }}</div>
+                            <ul class="filter-group__list" data-index="{{ forloop.index }}">
                                     {%- for filter_value in filter.values -%}
                                         <li class="filter-group__list-item">
                                             <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
@@ -84,9 +92,7 @@
                                             </label>
                                         </li>
                                     {%- endfor -%}
-                                </ul>
-                            {% endif %}
-                         
+                            </ul>
                         {%- when 'price_range' -%}
                             <hr>
                             <div class="filter-group__title filter-group__title--2">By {{ filter.label }}</div>

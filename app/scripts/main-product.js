@@ -13,79 +13,50 @@ register("main-product", {
           }
        );
 
-        var variant_index = 0;
-        const data = JSON.parse(this.container.querySelector("#data-product").innerText).data;
-        const { variants } = data;
-        const btn_minus = this.container.querySelector(".button-minus");
-        const btn_plus = this.container.querySelector(".button-plus");
-        const quantity = this.container.querySelector(".product-qty");
-        const product_size_options = this.container.querySelectorAll(".product-size__list li");
-        const current_price_element = this.container.querySelector(".product-price--current");
-        const compare_price_element = this.container.querySelector(".product-price--old");
-        const product_title_element = this.container.querySelector(".product-name");
-        const product_sku_element = this.container.querySelector(".product-sku span");
-        const product_form = this.container.querySelector("#main-product-form");
+        const product = JSON.parse(this.container.querySelector("#data-product").innerText).data;
+        const { variants } = product;
+        const current_variant_id = this.container.querySelector(`#product-form-${this.id} input[name="id"]`).value;
+        const current_variant = variants.find((variant)=> variant.id == parseFloat(current_variant_id));
+  
+        const quantity = this.container.querySelector(".quantity__input");
+        const _this = this;
 
-        btn_minus.addEventListener('click', function(){
-            var qty = parseInt(quantity.value);
-            if (qty != 1) {
-              quantity.value = qty - 1;
-              calculatorTotalPrice()
-            }
-        })
-
-        btn_plus.addEventListener('click', function(){
-          var qty = parseInt(quantity.value);
-          quantity.value = qty + 1;
-          calculatorTotalPrice()
-        })
-
-        product_size_options.forEach(function(option, index){
-          option.addEventListener('click', function(){
-              if (!this.classList.contains('active')) {
-                  this.parentElement.querySelector("li.active").classList.remove("active");
-                  this.classList.add("active");
-                  variant_index = index;
-                  product_title_element.innerText = variants[variant_index].name;
-                  product_sku_element.innerText = variants[variant_index].sku;
-                  calculatorTotalPrice();
-              }
-          })
-        })
-
-        product_form.addEventListener('submit', (e)=>{
-          e.preventDefault();
-          const id = this.container.querySelector(".product-size__list li.active").dataset.id;
-          const qty = this.container.querySelector("input.product-qty").value;
-          const items = [
-            {
-              'id': id,
-              'quantity': parseInt(qty)
-            }
-          ];
-
-          let formData = {
-              'items': items
-          }
-
-          $.ajax({
-              type: 'POST',
-              url: '/cart/add.js',
-              dataType: 'json',
-              data: formData,
-              success: function(res) {
-                  
-              },
-              error: function(e) {
-                  console.log(e);
-              }
-          }); 
+        quantity.addEventListener('change', function(){
+          calculatorTotalPrice();
         });
         
         function calculatorTotalPrice() {
-          var qty = parseInt(quantity.value);
-          current_price_element.innerText = '$' + variants[variant_index].price / 100 * qty;
-          compare_price_element.innerText = '$' + variants[variant_index].compare_at_price / 100 * qty;
+          const price = _this.container.querySelector(".price");
+          const price_regular = _this.container.querySelector(".price__regular .price-item--regular");
+          const price_sale = _this.container.querySelector(".price__sale .price-item--sale");
+          const price_sale_compare = _this.container.querySelector(".price__sale .price-item--regular");
+          const qty = parseInt(quantity.value);
+          
+          price.classList.forEach((className) =>{
+            if (className == "price--sold-out" || className == "price--on-sale" || className == "price--no-compare") {
+              price.classList.remove(className);
+            }
+          })
+         
+          if (product.price_varies == false && product.compare_at_price_varies) {
+              price.classList.add("price--no-compare");
+          }
+         
+          if (current_variant.compare_at_price && current_variant.compare_at_price > current_variant.price) {
+              price.classList.add("price--on-sale");
+          }
+          if (current_variant.available == false) {
+              price.classList.add("price--sold-out");
+          }
+          
+          price_regular.innerText = '$' + current_variant.price / 100 * qty;
+          price_sale.innerText = '$' + current_variant.price / 100 * qty;
+          if (current_variant.compare_at_price) {
+            price_sale_compare.innerText = '$' + current_variant.compare_at_price / 100 * qty;
+          } else {
+            price_sale_compare.innerText = '';
+          }
+          
         }
     }
   });

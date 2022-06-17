@@ -3,14 +3,14 @@
 <ul class="breadcrumb breadcrumb-wrapper">
     {%- case request.page_type -%}
         {%- when 'product' -%}
-            <li><a href="{{ shop.url }}">Home</a></li>
+            <li><a href="{{ routes.root_url }}">Home</a></li>
             <li><a href="#">Product</a></li>
             <li><a href="{{ product.url }}">{{- product.title -}}</a></li>
         {%- when 'cart' -%}
-            <li><a href="{{ shop.url }}">Home</a></li>
+            <li><a href="{{ routes.root_url }}">Home</a></li>
             <li><a href="#"> Cart</a></li>
         {%- when 'collection' -%}
-            <li><a href="{{ shop.url }}">Home</a></li>
+            <li><a href="{{ routes.root_url }}">Home</a></li>
             <li><a href="#"> Collection</a></li>
             <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
     {% endcase %}

@@ -52,55 +52,6 @@
     text-decoration: none;
 }
 
-.filter-group__list-item .fruits-group {
-    font-size: 15px;
-    font-weight: 400;
-    margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.filter-group__list-item details>summary {
-    list-style: none;
-}
-
-.filter-group__list-item summary::-webkit-details-marker {
-    display: none
-}
-
-.filter-group__list-item summary::marker {
-    content: none;
-}
-
-.filter-group__list-item summary::after {
-    content: ' ►';
-}
-
-.filter-group__list-item details[open] summary:after {
-    content: " ▼";
-}
-
-.filter-group__list-item:hover summary {
-    color: var(--green-color);
-}
-
-.filter-group__list-item:hover summary a {
-    color: var(--green-color);
-}
-
-.fruits-group__item a {
-    color: var(--text-color);
-}
-
-.filter-group__list-item:hover .fruits-group__item {
-    color: var(--text-color);
-}
-
-.filter-group__list-item .fruits-group__item:hover a {
-    color: var(--green-color);
-}
 
 .filter-group hr {
     margin-top: 40px;
@@ -153,10 +104,6 @@
     gap: 1px;
     width: 85px;
     padding-left: 11px;
-}
-
-.filter-group__price-range-icon {
-   
 }
 
 .filter-group__price-range-icon i{
@@ -307,3 +254,76 @@ span.page.current {
     color: var(--white-color);
 }
 
+
+.collections-list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.collections-list__item {
+    list-style: none;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.collections-list__item a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.collections-list__item:hover > a {
+    color: var(--green-color);
+}
+
+.collections-list__item .fruits-group {
+    font-size: 15px;
+    font-weight: 400;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.collections-list__item details>summary {
+    list-style: none;
+}
+
+.collections-list__item summary::-webkit-details-marker {
+    display: none
+}
+
+.collections-list__item summary::marker {
+    content: none;
+}
+
+.collections-list__item summary::after {
+    content: ' ►';
+}
+
+.collections-list__item details[open] summary:after {
+    content: " ▼";
+}
+
+.collections-list__item:hover summary {
+    color: var(--green-color);
+}
+
+.collections-list__item:hover summary a {
+    color: var(--green-color);
+}
+
+.fruits-group__item a {
+    color: var(--text-color);
+}
+
+/* .collections-list__item:hover .fruits-group__item {
+    color: var(--text-color);
+} */
+
+.collections-list__item .fruits-group__item:hover a {
+    color: var(--green-color);
+}

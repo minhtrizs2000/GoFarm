@@ -1,0 +1,85 @@
+/* component-quantity */
+.quantity {
+  position: relative;
+  display: flex;
+  border-radius: 5px;
+  min-height: 46px;
+  width: 126px;
+}
+
+.quantity__input {
+  color: var(--text-color-3);
+  font-size: 1.5rem;
+  text-align: center;
+  background-color: #F0F0F0;
+  border: 0;
+  outline: none;
+  padding: 0 0.5rem;
+  width: 100%;
+  flex-grow: 1;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.quantity__button {
+  width: 4rem;
+  flex-shrink: 0;
+  font-size: 1.8rem;
+  border: 0;
+  background-color: #F0F0F0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color-3);
+  padding: 0;
+}
+
+.quantity__button:first-child {
+  margin-left: 0;
+}
+
+.quantity__button:last-child {
+  margin-right: 0;
+}
+
+.quantity__button svg {
+  width: 1rem;
+  pointer-events: none;
+}
+
+/* 
+.quantity__button:focus-visible,
+.quantity__input:focus-visible {
+  background-color: rgb(var(--color-background));
+  z-index: 2;
+}
+
+.quantity__button:focus,
+.quantity__input:focus {
+  background-color: rgb(var(--color-background));
+  z-index: 2;
+}
+
+.quantity__button:not(:focus-visible):not(.focused),
+.quantity__input:not(:focus-visible):not(.focused) {
+  box-shadow: inherit;
+  background-color: inherit;
+}
+
+.quantity__input:-webkit-autofill,
+.quantity__input:-webkit-autofill:hover,
+.quantity__input:-webkit-autofill:active {
+  box-shadow: 0 0 0 10rem rgb(var(--color-background)) inset !important;
+  -webkit-box-shadow: 0 0 0 10rem rgb(var(--color-background)) inset !important;
+} */
+
+.quantity__input::-webkit-outer-spin-button,
+.quantity__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity__input[type="number"] {
+  -moz-appearance: textfield;
+}
